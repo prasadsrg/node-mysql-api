@@ -1,0 +1,20 @@
+/auth:
+  post:
+    tags:
+      - Access
+    parameters:
+      - name: body
+        in: body
+        required: false
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+              example: DFF-123456789
+            password:
+              type: string
+              example: 1234
+    responses:
+      200:
+        description: "status:1 is success; status: 0 is failure;"

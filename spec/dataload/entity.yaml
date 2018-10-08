@@ -1,0 +1,14 @@
+/dataload/{id}:
+  get:
+    tags:
+      - DataLoad
+    description: entity.
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        example: roles, codes, branches, batchtypes, courses, linktypes, timings, students, topicstatus, trainers, default
+    responses:
+      200:
+        description: "status:1 is success; status: 0 is failure;"
