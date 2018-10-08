@@ -6,12 +6,13 @@ import path = require("path");
 
 export class APIDocs {
   private router: Router = Router();
+  public config: any = null;
   getRouter(): Router {
     var options = {
       customCss: ".swagger-ui .topbar { display: none }  .info{ display: none}"
     };
 
-    const swaggerSpec = this.getConfig();
+    const swaggerSpec = this.apiDocsConfig();
     this.router.use(
       "/",
       swaggerUi.serve,
@@ -24,7 +25,7 @@ export class APIDocs {
     return `${needProtype ? "http://" : ""}${req.headers.host}`;
   }
 
-  private getConfig(host?: string): any {
+  private apiDocsConfig(host?: string): any {
     const apiList: Array<string> = APIDocs.getAllRoutes(
       path.join(__dirname, "./../../spec"),
       []
