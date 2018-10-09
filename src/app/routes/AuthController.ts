@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
-import { App } from "../../utils/App";
-import { AuthService } from "../../../src/app/services/AuthService";
+import { App } from "../../../server/utils/App";
+import { AuthService } from "../services/AuthService";
 
 export class AuthController {
   private router: Router = Router();
