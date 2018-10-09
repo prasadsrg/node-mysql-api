@@ -5,7 +5,7 @@ import { Props } from "../config/Props";
 import { AddressDAO } from "../../src/repos/AddressDAO";
 import { ImgDAO } from "../../src/repos/ImgDAO";
 import { ProfileDAO } from "../../src/repos/ProfileDAO";
-import { ProfileService } from "./ProfileService";
+import { ProfileService } from "../../src/app/services/ProfileService";
 
 export class BranchService {
   public sessionInfo: any;

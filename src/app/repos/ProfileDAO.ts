@@ -1,11 +1,11 @@
-import { getEntityManager, Repository } from "typeorm";
+import { getRepository, Repository } from "typeorm";
 import { Profile } from "../models/Profile";
 
 export class ProfileDAO {
   private dao: Repository<Profile>;
 
   constructor() {
-    this.dao = getEntityManager().getRepository(Profile);
+    this.dao = getRepository(Profile);
   }
 
   search(data: any) {
@@ -33,16 +33,18 @@ export class ProfileDAO {
   }
 
   save(data: any) {
-    return this.dao.persist(data);
+    return this.dao.save(data);
   }
 
   entity(id: string) {
-    return this.dao.findOneById(id, {
-      alias: "profile",
-      innerJoinAndSelect: {
-        img: "profile.img",
-        address: "profile.address",
-        branch: "profile.branch"
+    return this.dao.findOne(id, {
+      join: {
+        alias: "profile",
+        innerJoinAndSelect: {
+          img: "profile.img",
+          address: "profile.address",
+          branch: "profile.branch"
+        }
       }
     });
   }
@@ -53,9 +55,11 @@ export class ProfileDAO {
 
   findOne(data: any) {
     return this.dao.findOne(data, {
-      alias: "profile",
-      innerJoinAndSelect: {
-        branch: "profile.branch"
+      join: {
+        alias: "profile",
+        innerJoinAndSelect: {
+          branch: "profile.branch"
+        }
       }
     });
   }

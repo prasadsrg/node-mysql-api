@@ -1,27 +1,23 @@
-import { getEntityManager, Repository } from "typeorm";
+import { getRepository, Repository } from "typeorm";
 import { Img } from "../models/Img";
 
 export class ImgDAO {
   private dao: Repository<Img>;
 
   constructor() {
-    this.dao = getEntityManager().getRepository(Img);
+    this.dao = getRepository(Img);
   }
 
   search(data: any) {
-    return this.dao.find(data, {
-      alias: "img"
-    });
+    return this.dao.find(data);
   }
 
   save(data: Img) {
-    return this.dao.persist(data);
+    return this.dao.save(data);
   }
 
   entity(id: string) {
-    return this.dao.findOneById(id, {
-      alias: "img"
-    });
+    return this.dao.findOne(id);
   }
 
   delete(data: Img) {
@@ -29,9 +25,7 @@ export class ImgDAO {
   }
 
   findOne(data: any) {
-    return this.dao.findOne(data, {
-      alias: "img"
-    });
+    return this.dao.findOne(data);
   }
 }
 

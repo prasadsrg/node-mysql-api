@@ -1,10 +1,10 @@
-import { App } from "./../utils/App";
-import { Profile } from "../../src/models/Profile";
-import { ProfileDAO } from "../../src/repos/ProfileDAO";
-import { AddressDAO } from "../../src/repos/AddressDAO";
-import { ImgDAO } from "../../src/repos/ImgDAO";
-import { Props } from "../config/Props";
-import { getEntityManager, Repository, QueryBuilder } from "typeorm";
+import { App } from "../../utils/App";
+import { Profile } from "../models/Profile";
+import { ProfileDAO } from "../repos/ProfileDAO";
+import { AddressDAO } from "../repos/AddressDAO";
+import { ImgDAO } from "../repos/ImgDAO";
+import { Props } from "../../utils/Props";
+import { Repository, QueryBuilder } from "typeorm";
 import { hashSync, compare } from "bcryptjs";
 
 export class ProfileService {
@@ -41,7 +41,10 @@ export class ProfileService {
   async filter(reqData: any) {
     try {
       // reqData.grpcode = this.sessionInfo.grpcode;
-      if (reqData.session.role == "SuperAdmin") {
+      if (
+        reqData.session.role == "SuperAdmin" ||
+        reqData.session.role == "SUPER_ADMIN"
+      ) {
         let data: any = await this.profileDao.search({});
         return Promise.resolve(data);
       } else {

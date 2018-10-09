@@ -1,19 +1,19 @@
-import { ProfileDAO } from "../../../src/repos/ProfileDAO";
-import { AppMenuDAO } from "../../../src/repos/AccessMenuDAO";
-import { BranchDAO } from "../../../src/repos/BranchDAO";
-import { ProfileService } from "../../../server/services/ProfileService";
-import { Profile } from "../../../src/models/Profile";
+import { ProfileDAO } from "../repos/ProfileDAO";
+import { AccessMenuDAO } from "../repos/AccessMenuDAO";
+import { BranchDAO } from "../repos/BranchDAO";
+import { ProfileService } from "./ProfileService";
+import { Profile } from "../models/Profile";
 
 import { generate } from "randomstring";
 import { hashSync, compareSync } from "bcryptjs";
 
-import { App } from "../../../server/utils/App";
-import { Props } from "../../../server/config/Props";
+import { App } from "../..//utils/App";
+import { Props } from "../../utils/Props";
 
 export class AuthService {
   public sessionInfo: any;
   private profileDAO: ProfileDAO;
-  private appMenuDAO: AppMenuDAO;
+  private accessMenuDAO: AccessMenuDAO;
   private profileService: ProfileService;
   private branchDAO: BranchDAO;
   private providers: any;
@@ -21,7 +21,7 @@ export class AuthService {
 
   constructor() {
     this.profileDAO = new ProfileDAO();
-    this.appMenuDAO = new AppMenuDAO();
+    this.accessMenuDAO = new AccessMenuDAO();
     this.profileService = new ProfileService();
     this.branchDAO = new BranchDAO();
     this.providers = {
@@ -33,7 +33,7 @@ export class AuthService {
     this.transporter = App.createEmailAccount();
   }
 
-  retrieve(reqData: any) {
+  retrieve(reqData: any): any {
     switch (reqData.provider) {
       case "email": {
         return this.sendEmailResponse(reqData);
@@ -73,14 +73,14 @@ export class AuthService {
     try {
       return this.profileService
         .save(newAccount)
-        .then(results => {
+        .then(() => {
           return this.retrieve({
             email: reqData.userId,
             password: reqData.password,
             provider: "email"
           });
         })
-        .catch(error => {
+        .catch((error: any) => {
           return Promise.reject(error);
         });
     } catch (error) {
@@ -108,7 +108,7 @@ export class AuthService {
         responseData.user.active = accountObj.active;
         responseData.user.branch = accountObj.branch.id;
 
-        var menuAccessObj = await this.appMenuDAO.search({
+        var menuAccessObj = await this.accessMenuDAO.search({
           role: accountObj.role,
           active: accountObj.active
         });
@@ -276,7 +276,7 @@ export class AuthService {
                         </html>` // html body
       };
       if (data) {
-        this.transporter.sendMail(mailOptions, (err, info) => {
+        this.transporter.sendMail(mailOptions, (err: any, info: any) => {
           if (err) {
             return Promise.reject(err);
           }

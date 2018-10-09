@@ -1,7 +1,7 @@
-import { App } from "./../utils/App";
-import { Img } from "../../src/models/Img";
-import { ImgDAO } from "../../src/repos/ImgDAO";
-import { Props } from "../config/Props";
+import { App } from "../../utils/App";
+import { Img } from "../models/Img";
+import { ImgDAO } from "../repos/ImgDAO";
+import { Props } from "../../utils/Props";
 
 export class ImgService {
   public sessionInfo: any;
@@ -23,11 +23,6 @@ export class ImgService {
   async save(item: Img) {
     try {
       if (await this.validate(item)) {
-        let uid = App.UniqueNumber();
-        if (!item.id || item.id == "" || item.id == "0") {
-          item.id = uid;
-        }
-
         let imgData: any = await this.imgDao.save(item);
         let returnData = {
           id: item.id,
@@ -36,7 +31,7 @@ export class ImgService {
         return Promise.resolve(returnData);
       } else {
         let returnData = {
-          message: "Please enter proper values."
+          message: Props.INVALID_DATA
         };
         return Promise.reject(returnData);
       }
@@ -61,9 +56,6 @@ export class ImgService {
 
   async validate(item: Img) {
     if (!item.id || item.id == "" || item.id == "0") {
-      item.id = null;
-    }
-    if (!item.id) {
       let uid = App.UniqueNumber();
       item.id = uid;
     }

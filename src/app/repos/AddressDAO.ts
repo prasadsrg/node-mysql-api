@@ -1,27 +1,23 @@
-import { getEntityManager, Repository } from "typeorm";
+import { getRepository, Repository } from "typeorm";
 import { Address } from "../models/Address";
 
 export class AddressDAO {
   private dao: Repository<Address>;
 
   constructor() {
-    this.dao = getEntityManager().getRepository(Address);
+    this.dao = getRepository(Address);
   }
 
   search(data: any) {
-    return this.dao.find(data, {
-      alias: "address"
-    });
+    return this.dao.find(data);
   }
 
   save(data: Address) {
-    return this.dao.persist(data);
+    return this.dao.save(data);
   }
 
   entity(id: string) {
-    return this.dao.findOneById(id, {
-      alias: "address"
-    });
+    return this.dao.findOne(id);
   }
 
   delete(data: Address) {
@@ -29,9 +25,7 @@ export class AddressDAO {
   }
 
   findOne(data: any) {
-    return this.dao.findOne(data, {
-      alias: "address"
-    });
+    return this.dao.findOne(data);
   }
 }
 

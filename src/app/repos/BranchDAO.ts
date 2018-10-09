@@ -1,11 +1,11 @@
-import { getEntityManager, Repository } from "typeorm";
+import { getRepository, Repository } from "typeorm";
 import { Branch } from "../models/Branch";
 
 export class BranchDAO {
   private dao: Repository<Branch>;
 
   constructor() {
-    this.dao = getEntityManager().getRepository(Branch);
+    this.dao = getRepository(Branch);
   }
 
   search(data: any) {
@@ -22,15 +22,17 @@ export class BranchDAO {
   }
 
   save(data: Branch) {
-    return this.dao.persist(data);
+    return this.dao.save(data);
   }
 
-  entity(id: string) {
-    return this.dao.findOneById(id, {
-      alias: "branch",
-      innerJoinAndSelect: {
-        address: "branch.address",
-        img: "branch.img"
+  entity(id: any) {
+    return this.dao.findOne(id, {
+      join: {
+        alias: "branch",
+        innerJoinAndSelect: {
+          address: "branch.address",
+          img: "branch.img"
+        }
       }
     });
   }
@@ -41,10 +43,12 @@ export class BranchDAO {
 
   findOne(data: any) {
     return this.dao.findOne(data, {
-      alias: "branch",
-      innerJoinAndSelect: {
-        address: "branch.address",
-        img: "branch.img"
+      join: {
+        alias: "branch",
+        innerJoinAndSelect: {
+          address: "branch.address",
+          img: "branch.img"
+        }
       }
     });
   }
