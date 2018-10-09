@@ -1,4 +1,4 @@
-import * as jsreport from "jsreport";
+//import * as jsreport from "jsreport-core";
 import * as path from "path";
 import * as fs from "fs";
 import * as jwt from "jsonwebtoken";
@@ -21,15 +21,15 @@ export class App {
     return time.toString(36).toUpperCase();
   }
 
-  public static Send(req, res, promise) {
+  public static Send(req: any, res: any, promise: any) {
     var respObj: any = {};
     promise
-      .then(data => {
+      .then((data: any) => {
         respObj.status = 1;
         respObj.data = data;
         res.jsonp(respObj);
       })
-      .catch(err => {
+      .catch((err: any) => {
         console.log(err);
         respObj.status = 0;
         respObj.error = err;
@@ -37,45 +37,45 @@ export class App {
       });
   }
 
-  public static Print(template, res, promise) {
-    promise
-      .then(data => {
-        template = path.join(
-          __dirname,
-          "/../../docs/templates/" + template + ".html"
-        );
-        template = fs.readFileSync(template, "utf8");
-        data = JSON.parse(JSON.stringify(data));
-        //console.log(data.data);
-        jsreport
-          .render({
-            template: {
-              engine: "handlebars",
-              content: template,
-              recipe: "html"
-            },
-            data: data.data
-          })
-          .then(out => {
-            console.log(out.stream);
-            out.stream.pipe(res);
-          })
-          .catch(err => {
-            var respObj: any = {};
-            console.log(err);
-            respObj.status = 0;
-            respObj.error = err;
-            res.jsonp(respObj);
-          });
-      })
-      .catch(err => {
-        var respObj: any = {};
-        console.log(err);
-        respObj.status = 0;
-        respObj.error = err;
-        res.jsonp(respObj);
-      });
-  }
+  // public static Print(template: any, res: any, promise: any) {
+  //   promise
+  //     .then((data: any) => {
+  //       template = path.join(
+  //         __dirname,
+  //         "/../../docs/templates/" + template + ".html"
+  //       );
+  //       template = fs.readFileSync(template, "utf8");
+  //       data = JSON.parse(JSON.stringify(data));
+  //       //console.log(data.data);
+  //       jsreport
+  //         .render({
+  //           template: {
+  //             engine: "handlebars",
+  //             content: template,
+  //             recipe: "html"
+  //           },
+  //           data: data.data
+  //         })
+  //         .then((out: any) => {
+  //           console.log(out.stream);
+  //           out.stream.pipe(res);
+  //         })
+  //         .catch((err: any) => {
+  //           var respObj: any = {};
+  //           console.log(err);
+  //           respObj.status = 0;
+  //           respObj.error = err;
+  //           res.jsonp(respObj);
+  //         });
+  //     })
+  //     .catch((err: any) => {
+  //       var respObj: any = {};
+  //       console.log(err);
+  //       respObj.status = 0;
+  //       respObj.error = err;
+  //       res.jsonp(respObj);
+  //     });
+  // }
 
   public static encodeJWT(data: any) {
     return jwt.sign(data, "SwanInfo");

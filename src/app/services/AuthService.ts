@@ -185,13 +185,27 @@ export class AuthService {
   // }
 
   async sendEmailResponse(reqData: any) {
+    let isVid: boolean = true;
+    let dataList = reqData.username.split("-");
+    if (dataList.length > 1) {
+      reqData.vid = dataList[0];
+      reqData.userId = dataList[1];
+    } else {
+      isVid = false;
+      reqData.userId = reqData.username;
+    }
+
     var responseData: any = {};
-    let query = {};
+    let query: any = {};
     if (typeof reqData.userId == "number" && reqData.userId > 9) {
       query = { mobile: reqData.userId };
     } else {
       query = { email: reqData.userId };
     }
+    if (isVid) {
+      query["vid"] = reqData.vid;
+    }
+
     console.log(query);
     var profileObj: any = await this.profileDAO.findOne(query);
     if (profileObj == null) {
@@ -245,7 +259,7 @@ export class AuthService {
       }
       const tok = generate({ length: 4, charset: "numeric" });
       console.log(tok);
-      uname.passwordToken = tok;
+      uname.token = tok;
       let data: any = await this.profileDAO.save(uname);
       const mailOptions = {
         from: '"Mee Truck" <elit.naveen@gmail.com>', // sender address

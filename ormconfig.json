@@ -1,22 +1,15 @@
-[
-  {
-    "name": "default",
-    "driver": {
-      "type": "mysql",
-      "host": "104.154.59.212",
-      "port": 3306,
-      "username": "root",
-      "password": "Shashi123*",
-      "database": "meetruck_dev",
-      "usePool": true,
-      "logging": true
-    },
-    "autoSchemaSync": false,
-    "entities": [
-      "dist/entities/*.js"
-    ],
-    "cli": {
-      "entitiesDir": "dist/entities"
-    }
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "root",
+  "password": "Admin!234",
+  "database": "abcd_db",
+  "usePool": true,
+  "logging": true,
+  "autoSchemaSync": false,
+  "entities": ["./app/models/*.js"],
+  "cli": {
+    "entitiesDir": "./app/models/"
   }
-]
+}

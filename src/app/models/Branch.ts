@@ -53,4 +53,7 @@ export class Branch {
 
   @Column({ name: "updated_on" })
   updatedOn: Date;
+
+  @Column({ name: "vid" })
+  vid: string;
 }

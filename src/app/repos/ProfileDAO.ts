@@ -15,11 +15,6 @@ export class ProfileDAO {
       .innerJoinAndSelect("profile.branch", "branch")
       .orderBy("profile.updatedOn", "DESC")
       .getMany();
-    //     return this.dao.createQueryBuilder("profile")
-    //     .leftJoinAndSelect("profile.profile", "profile")
-
-    //    .orderBy("agencyDevice.updated_on", "DESC")
-    //    .getMany();
   }
 
   searchByBranch(data: any) {

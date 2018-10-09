@@ -1,6 +1,7 @@
 import express from "express";
 import { json, urlencoded } from "body-parser";
 import { APIDocs } from "./ApiDocs";
+import { AuthController } from "../app/routes/AuthController";
 
 class AppExpress {
   public express: any;
@@ -13,18 +14,20 @@ class AppExpress {
     this.mountRoutes();
   }
 
-  private mountRoutes(): void {
+  private async mountRoutes() {
     const router = express.Router();
     router.get("/", (req, res) => {
       res.json({
         message: "Hello World! Website Applications"
       });
     });
+    this.express.use("/", router);
+
     let apiDocs = new APIDocs();
-    //Prefix as dledursc
     this.express.use("/apidocs", apiDocs.getRouter());
 
-    this.express.use("/", router);
+    let authController = new AuthController();
+    this.express.use("/api/auth", authController.getRouter());
   }
 
   private chunkDataHandle(): void {

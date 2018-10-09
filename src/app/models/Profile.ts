@@ -30,7 +30,7 @@ export class Profile {
   @Column({ name: "active" })
   active: boolean;
 
-  @Column({ name: "token " })
+  @Column({ name: "token" })
   token: string;
 
   @Column({ name: "created_by" })
@@ -56,4 +56,7 @@ export class Profile {
   @JoinColumn({ name: "branch_id" })
   @ManyToOne(type => Branch)
   branch: Branch;
+
+  @Column({ name: "vid" })
+  vid: string;
 }
