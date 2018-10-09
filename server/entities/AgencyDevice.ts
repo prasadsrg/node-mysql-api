@@ -1,6 +1,6 @@
 import {Entity, PrimaryColumn, Column, ManyToOne, JoinColumn} from "typeorm";
 
-import { Branch } from "./Branch";
+import { Branch } from "../../src/models/Branch";
 import { Device } from "./Device";
 
 

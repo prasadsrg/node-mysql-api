@@ -1,9 +1,9 @@
 import {Entity, PrimaryColumn, Column, ManyToOne, JoinColumn} from "typeorm";
 
 import { Driver } from "./Driver";
-import { Profile } from "./Profile";
-import { Img } from "./Img";
-import {Branch} from "./Branch";
+import { Profile } from "../../src/models/Profile";
+import { Img } from "../../src/models/Img";
+import {Branch} from "../../src/models/Branch";
 import {VehicleTax} from "./VehicleTax";
 import {VehicleInsurance} from "./VehicleInsurance";
 import {VehicleRegistration} from "./VehicleRegistration";

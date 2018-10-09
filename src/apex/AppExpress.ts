@@ -2,7 +2,7 @@ import express from "express";
 import { json, urlencoded } from "body-parser";
 import { APIDocs } from "./ApiDocs";
 
-class App {
+class AppExpress {
   public express: any;
 
   constructor() {
@@ -88,4 +88,4 @@ class App {
   }
 }
 
-export default new App().express;
+export default new AppExpress().express;

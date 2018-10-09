@@ -1,16 +1,16 @@
 import { getEntityManager, Repository } from "typeorm";
-import { AppMenu } from "../models/AccessMenu";
+import { AccessMenu } from "../models/AccessMenu";
 
-export class AppMenuDAO {
-  private dao: Repository<AppMenu>;
+export class AccessMenuDAO {
+  private dao: Repository<AccessMenu>;
 
   constructor() {
-    this.dao = getEntityManager().getRepository(AppMenu);
+    this.dao = getEntityManager().getRepository(AccessMenu);
   }
 
   search(data: any) {
     return this.dao.find(data, {
-      alias: "appMenu",
+      alias: "accessMenu",
       innerJoinAndSelect: {}
     });
 
@@ -19,27 +19,27 @@ export class AppMenuDAO {
     //    .getMany();
   }
 
-  save(data: AppMenu) {
+  save(data: AccessMenu) {
     return this.dao.persist(data);
   }
 
   entity(id: string) {
     return this.dao.findOneById(id, {
-      alias: "appMenu",
+      alias: "accessMenu",
       innerJoinAndSelect: {}
     });
   }
 
-  delete(data: AppMenu) {
+  delete(data: AccessMenu) {
     return this.dao.remove([data]);
   }
 
   findOne(data: any) {
     return this.dao.findOne(data, {
-      alias: "appMenu",
+      alias: "accessMenu",
       innerJoinAndSelect: {}
     });
   }
 }
 
-Object.seal(AppMenuDAO);
+Object.seal(AccessMenuDAO);

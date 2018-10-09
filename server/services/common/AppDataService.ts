@@ -1,5 +1,5 @@
 import { App } from "../../utils/App";
-import { AppData } from "../../entities/AppData";
+import { AppData } from "../../../src/models/AppData";
 import { AppDataDAO } from "../../dao/AppDataDAO";
 import { Props } from '../../config/Props';
 

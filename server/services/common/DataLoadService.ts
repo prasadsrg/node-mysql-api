@@ -1,4 +1,4 @@
-import { Branch } from './../../entities/Branch';
+import { Branch } from '../../../src/models/Branch';
 import { getEntityManager, Repository, QueryBuilder } from "typeorm";
 import * as url from "url";
 

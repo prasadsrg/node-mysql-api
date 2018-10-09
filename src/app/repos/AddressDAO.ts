@@ -1,38 +1,38 @@
 import { getEntityManager, Repository } from "typeorm";
-import { Img } from "../models/Img";
+import { Address } from "../models/Address";
 
-export class ImgDAO {
-  private dao: Repository<Img>;
+export class AddressDAO {
+  private dao: Repository<Address>;
 
   constructor() {
-    this.dao = getEntityManager().getRepository(Img);
+    this.dao = getEntityManager().getRepository(Address);
   }
 
   search(data: any) {
     return this.dao.find(data, {
-      alias: "img"
+      alias: "address"
     });
   }
 
-  save(data: Img) {
+  save(data: Address) {
     return this.dao.persist(data);
   }
 
   entity(id: string) {
     return this.dao.findOneById(id, {
-      alias: "img"
+      alias: "address"
     });
   }
 
-  delete(data: Img) {
+  delete(data: Address) {
     return this.dao.remove([data]);
   }
 
   findOne(data: any) {
     return this.dao.findOne(data, {
-      alias: "img"
+      alias: "address"
     });
   }
 }
 
-Object.seal(ImgDAO);
+Object.seal(AddressDAO);

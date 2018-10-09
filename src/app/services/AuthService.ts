@@ -1,14 +1,14 @@
-import { ProfileDAO } from "../../dao/ProfileDAO";
-import { AppMenuDAO } from "../../dao/AppMenuDAO";
-import { BranchDAO } from "../../dao/BranchDAO";
-import { ProfileService } from "../ProfileService";
-import { Profile } from "../../entities/Profile";
+import { ProfileDAO } from "../../../src/repos/ProfileDAO";
+import { AppMenuDAO } from "../../../src/repos/AccessMenuDAO";
+import { BranchDAO } from "../../../src/repos/BranchDAO";
+import { ProfileService } from "../../../server/services/ProfileService";
+import { Profile } from "../../../src/models/Profile";
 
 import { generate } from "randomstring";
 import { hashSync, compareSync } from "bcryptjs";
 
-import { App } from "../../utils/App";
-import { Props } from "../../config/Props";
+import { App } from "../../../server/utils/App";
+import { Props } from "../../../server/config/Props";
 
 export class AuthService {
   public sessionInfo: any;

@@ -3,7 +3,7 @@ import {Entity, PrimaryColumn, Column, ManyToOne, JoinColumn} from "typeorm";
 // import { Branch } from "./Branch";
 import { Device } from "./Device";
 import {Vehicle} from "./Vehicle";
-import {Profile} from "./Profile";
+import {Profile} from "../../src/models/Profile";
 import {Driver} from "./Driver";
 
 @Entity("user_vehicle")

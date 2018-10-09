@@ -1,8 +1,8 @@
 import {Entity, PrimaryColumn, Column, ManyToOne, JoinColumn} from "typeorm";
 
-import { Branch } from "./Branch";
-import { Profile } from "./Profile";
-import { Img } from "./Img";
+import { Branch } from "../../src/models/Branch";
+import { Profile } from "../../src/models/Profile";
+import { Img } from "../../src/models/Img";
 
 @Entity("driver")
 export class Driver { 

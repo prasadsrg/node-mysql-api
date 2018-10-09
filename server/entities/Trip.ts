@@ -1,7 +1,7 @@
 import {Entity, PrimaryColumn, Column, ManyToOne, JoinColumn} from "typeorm";
 
 import {Vehicle} from "./Vehicle";
-import {Profile} from "./Profile";
+import {Profile} from "../../src/models/Profile";
 import {Driver} from "./Driver";
 @Entity("trip")
 export class Trip{

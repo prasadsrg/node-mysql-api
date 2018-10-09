@@ -1,6 +1,6 @@
 import { getEntityManager, Repository } from "typeorm";
 import { Device} from "./../entities/Device";
-import { Branch } from "./../entities/Branch";
+import { Branch } from "../../src/models/Branch";
 
 export class DeviceDAO {
 

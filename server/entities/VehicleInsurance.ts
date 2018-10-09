@@ -1,7 +1,7 @@
 import {Entity, PrimaryColumn, Column, ManyToOne, JoinColumn} from "typeorm";
 
-import { Branch } from "./Branch";
-import { Img } from "./Img";
+import { Branch } from "../../src/models/Branch";
+import { Img } from "../../src/models/Img";
 
 
 @Entity("vehicle_insurance")

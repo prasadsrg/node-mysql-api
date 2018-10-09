@@ -1,5 +1,5 @@
 import { getEntityManager, Repository } from "typeorm";
-import { AppData } from "./../entities/AppData";
+import { AppData } from "../../src/models/AppData";
 
 export class AppDataDAO {
 
