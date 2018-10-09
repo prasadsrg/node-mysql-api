@@ -1,5 +1,5 @@
 import { getRepository, Repository } from "typeorm";
-import { Img } from "../models/Img";
+import { Img } from "../../entities/Img";
 
 export class ImgDAO {
   private dao: Repository<Img>;

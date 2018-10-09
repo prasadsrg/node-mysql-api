@@ -1,5 +1,5 @@
 import { getRepository, Repository } from "typeorm";
-import { AccessMenu } from "../models/AccessMenu";
+import { AccessMenu } from "../../entities/AccessMenu";
 
 export class AccessMenuDAO {
   private dao: Repository<AccessMenu>;

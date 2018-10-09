@@ -8,8 +8,8 @@
   "usePool": true,
   "logging": true,
   "autoSchemaSync": false,
-  "entities": ["./app/models/*.js"],
+  "entities": ["./dist/entities/*.js"],
   "cli": {
-    "entitiesDir": "./app/models/"
+    "entitiesDir": "./dist/entities/"
   }
 }

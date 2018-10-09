@@ -1,5 +1,5 @@
 import { getRepository, Repository } from "typeorm";
-import { Branch } from "../models/Branch";
+import { Branch } from "../../entities/Branch";
 
 export class BranchDAO {
   private dao: Repository<Branch>;

@@ -1,5 +1,5 @@
 import { getRepository, Repository } from "typeorm";
-import { Address } from "../models/Address";
+import { Address } from "../../entities/Address";
 
 export class AddressDAO {
   private dao: Repository<Address>;

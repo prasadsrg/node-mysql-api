@@ -3,7 +3,7 @@ import { json, urlencoded } from "body-parser";
 import { APIDocs } from "./ApiDocs";
 import { AuthController } from "../app/routes/AuthController";
 
-class AppExpress {
+export default class AppExpress {
   public express: any;
 
   constructor() {
@@ -14,7 +14,7 @@ class AppExpress {
     this.mountRoutes();
   }
 
-  private async mountRoutes() {
+  public async mountRoutes() {
     const router = express.Router();
     router.get("/", (req, res) => {
       res.json({
@@ -27,7 +27,8 @@ class AppExpress {
     this.express.use("/apidocs", apiDocs.getRouter());
 
     let authController = new AuthController();
-    this.express.use("/api/auth", authController.getRouter());
+    console.log(" ************************************** authController");
+    this.express.use("/api/auth", await authController.getRouter());
   }
 
   private chunkDataHandle(): void {
@@ -90,5 +91,3 @@ class AppExpress {
     );
   }
 }
-
-export default new AppExpress().express;

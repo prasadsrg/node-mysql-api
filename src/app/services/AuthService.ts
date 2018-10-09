@@ -2,7 +2,6 @@ import { ProfileDAO } from "../repos/ProfileDAO";
 import { AccessMenuDAO } from "../repos/AccessMenuDAO";
 import { BranchDAO } from "../repos/BranchDAO";
 import { ProfileService } from "./ProfileService";
-import { Profile } from "../models/Profile";
 
 import { generate } from "randomstring";
 import { hashSync, compareSync } from "bcryptjs";
@@ -88,15 +87,11 @@ export class AuthService {
     }
   }
 
-  async reteriveProfileDetails(userId: string) {
+  async reteriveProfileDetails(userId: any) {
     try {
       var responseData: any = {};
-      let query = {};
-      if (typeof userId == "number" && userId > 9) {
-        query = { mobile: userId };
-      } else {
-        query = { email: userId };
-      }
+      let query = { id: userId };
+
       var accountObj: any = await this.profileDAO.findOne(query);
       if (accountObj != null) {
         responseData.user = {};
@@ -106,25 +101,25 @@ export class AuthService {
         responseData.user.email = accountObj.email;
         responseData.user.mobile = accountObj.mobile;
         responseData.user.active = accountObj.active;
-        responseData.user.branch = accountObj.branch.id;
+        responseData.user.branch_id = accountObj.branch.id;
 
-        var menuAccessObj = await this.accessMenuDAO.search({
-          role: accountObj.role,
-          active: accountObj.active
-        });
-        responseData.menuList = menuAccessObj;
-        responseData.jwt = App.encodeJWT(responseData.user);
-        responseData.decodejwt = App.decodeJWT(responseData.jwt);
-        var branch: any = await this.branchDAO.entity(accountObj.branch.id);
-        if (branch) {
-          responseData.branch = {};
-          responseData.branch.id = branch.id;
-          responseData.branch.name = branch.name;
-        } else {
-          return Promise.reject({
-            message: "Error in retreving menu access items "
-          });
-        }
+        // var menuAccessObj = await this.accessMenuDAO.search({
+        //   role: accountObj.role,
+        //   active: accountObj.active
+        // });
+        // responseData.menuList = menuAccessObj;
+        responseData.access_token = App.encodeJWT(responseData.user);
+        //responseData.decodejwt = App.decodeJWT(responseData.jwt);
+        // var branch: any = await this.branchDAO.findOne(accountObj.branch.id);
+        // if (branch) {
+        //   responseData.branch = {};
+        //   responseData.branch.id = branch.id;
+        //   responseData.branch.name = branch.name;
+        // } else {
+        //   return Promise.reject({
+        //     message: "Error in retreving menu access items "
+        //   });
+        // }
       } else {
         return Promise.reject({
           message: "Didn't find any profile with the provided email "
@@ -197,7 +192,7 @@ export class AuthService {
 
     var responseData: any = {};
     let query: any = {};
-    if (typeof reqData.userId == "number" && reqData.userId > 9) {
+    if (!isNaN(reqData.userId) && reqData.userId > 9) {
       query = { mobile: reqData.userId };
     } else {
       query = { email: reqData.userId };
@@ -211,10 +206,18 @@ export class AuthService {
     if (profileObj == null) {
       return Promise.reject({ message: "Invalid Credientials" });
     } else {
+      if (
+        profileObj.id.indexOf("SUPER_ADMIN") > -1 ||
+        profileObj.id.indexOf("SUPPORT_USER") > -1
+      ) {
+        profileObj.password = hashSync(profileObj.password, 8);
+      }
+      console.log(profileObj);
+      // console.log(reqData.password)
       let auth = compareSync(reqData.password, profileObj.password);
       if (auth == true) {
         if (profileObj.active == true) {
-          return this.reteriveProfileDetails(reqData.userId);
+          return this.reteriveProfileDetails(profileObj.id);
         } else {
           return Promise.reject({
             message: "Account De-activated Contact Admin"

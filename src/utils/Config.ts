@@ -1,10 +1,10 @@
 import "reflect-metadata";
 import { ConnectionOptions } from "typeorm";
-import { Profile } from "../app/models/Profile";
-import { Address } from "../app/models/Address";
-import { Branch } from "../app/models/Branch";
-import { AccessMenu } from "../app/models/AccessMenu";
-import { Img } from "../app/models/Img";
+import { Profile } from "../entities/Profile";
+import { Address } from "../entities/Address";
+import { Branch } from "../entities/Branch";
+import { AccessMenu } from "../entities/AccessMenu";
+import { Img } from "../entities/Img";
 
 export let dbOptions: ConnectionOptions = {
   name: "default",
@@ -16,5 +16,5 @@ export let dbOptions: ConnectionOptions = {
   database: "abcd_db",
   logging: true,
   synchronize: false,
-  entities: [Profile, Address, Img, Branch, AccessMenu]
+  entities: [Profile, Address, Branch, AccessMenu, Img]
 };

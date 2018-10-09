@@ -1,15 +1,19 @@
 import { getRepository, Repository } from "typeorm";
-import { Profile } from "../models/Profile";
+import { Profile } from "../../entities/Profile";
 
 export class ProfileDAO {
   private dao: Repository<Profile>;
 
   constructor() {
-    this.dao = getRepository(Profile);
+    this.run();
   }
 
-  search(data: any) {
-    return this.dao
+  async run() {
+    this.dao = await getRepository(Profile);
+  }
+
+  async search(data: any) {
+    return await this.dao
       .createQueryBuilder("profile")
       .innerJoinAndSelect("profile.address", "address")
       .innerJoinAndSelect("profile.branch", "branch")
@@ -17,8 +21,8 @@ export class ProfileDAO {
       .getMany();
   }
 
-  searchByBranch(data: any) {
-    return this.dao
+  async searchByBranch(data: any) {
+    return await this.dao
       .createQueryBuilder("profile")
       .innerJoinAndSelect("profile.address", "address")
       .innerJoinAndSelect("profile.branch", "branch")
@@ -27,12 +31,12 @@ export class ProfileDAO {
       .getMany();
   }
 
-  save(data: any) {
-    return this.dao.save(data);
+  async save(data: any) {
+    return await this.dao.save(data);
   }
 
-  entity(id: string) {
-    return this.dao.findOne(id, {
+  async entity(id: string) {
+    return await this.dao.findOne(id, {
       join: {
         alias: "profile",
         innerJoinAndSelect: {
@@ -44,12 +48,12 @@ export class ProfileDAO {
     });
   }
 
-  delete(data: Profile) {
-    return this.dao.remove([data]);
+  async delete(data: Profile) {
+    return await this.dao.remove([data]);
   }
 
-  findOne(data: any) {
-    return this.dao.findOne(data, {
+  async findOne(data: any) {
+    return await this.dao.findOne(data, {
       join: {
         alias: "profile",
         innerJoinAndSelect: {

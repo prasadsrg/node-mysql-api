@@ -1,5 +1,5 @@
 import { App } from "../../utils/App";
-import { Img } from "../models/Img";
+import { Img } from "../../entities/Img";
 import { ImgDAO } from "../repos/ImgDAO";
 import { Props } from "../../utils/Props";
 

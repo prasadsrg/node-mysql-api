@@ -14,14 +14,20 @@ export class AuthController {
       let reqData: any = request.body;
       let sessionInfo: any = {};
       let result: any = null;
-      console.log(reqData.data);
-      if (reqData.data) {
+      console.log(reqData);
+      if (reqData) {
         this.authService.sessionInfo = sessionInfo;
-        result = this.authService.retrieve(reqData.data);
+        result = this.authService.retrieve(reqData);
       } else {
         result = { message: "Invalid Data" };
       }
-      App.Send(request, response, result);
+      //App.Send(request, response, result);
+      result.then((data: any) => {
+        response.send(data);
+      });
+      result.catch((error: any) => {
+        response.send(error);
+      });
     });
 
     //Forgot Password Controller

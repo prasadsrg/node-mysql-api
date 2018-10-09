@@ -1,5 +1,5 @@
 import { App } from "../../utils/App";
-import { Profile } from "../models/Profile";
+import { Profile } from "../../entities/Profile";
 import { ProfileDAO } from "../repos/ProfileDAO";
 import { AddressDAO } from "../repos/AddressDAO";
 import { ImgDAO } from "../repos/ImgDAO";
