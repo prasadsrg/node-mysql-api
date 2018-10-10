@@ -14,11 +14,11 @@ export class AppDataController {
         this.service.sessionInfo = request.body.sessionInfo;
         let result = null;
         App.PrintLog(this.constructor.name, "Entity", this.service.sessionInfo);
-        //  if (App.CheckSessionInfo(this.service.sessionInfo)) {
-        result = await this.service.entity(id);
-        //   } else {
-        //   throw this.service.sessionInfo ? this.service.sessionInfo : { message: Props.TOKEN_MESSAGE };
-        //    }
+        if (App.CheckSessionInfo(this.service.sessionInfo)) {
+          result = await this.service.entity(id);
+        } else {
+          throw this.service.sessionInfo ? this.service.sessionInfo : { message: Props.TOKEN_MESSAGE };
+        }
         response.send({ status: 1, data: result });
       } catch (error) {
         console.log(error);

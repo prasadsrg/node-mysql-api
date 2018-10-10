@@ -2,6 +2,7 @@ import express from "express";
 import { json, urlencoded } from "body-parser";
 import { APIDocs } from "./ApiDocs";
 import { AppController } from "./AppController";
+import { App } from "../utils/App";
 
 export default class AppExpress {
   public express: any;
@@ -41,13 +42,26 @@ export default class AppExpress {
           if (data && data != "") {
             req.body = data;
           }
+          this.addSessionInfo(req);
           next();
         });
       } else {
+        this.addSessionInfo(req);
         next();
       }
     });
   }
+
+  private addSessionInfo = (req: any) => {
+    let sessionInfo = App.decodeJWT(req.headers["authorization"]);
+    console.log("sessionInfo: ");
+    console.log(sessionInfo);
+    console.log("-----------------------------------------------------");
+    if (!req.body) {
+      req.body = {};
+    }
+    req.body.sessionInfo = sessionInfo;
+  };
 
   private parsePost(req: express.Request, callback: any) {
     var data = "";

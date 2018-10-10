@@ -14,7 +14,7 @@
               example: DFF-123456789
             password:
               type: string
-              example: 1234
+              example: "1234"
     responses:
       200:
         description: "status:1 is success; status: 0 is failure;"

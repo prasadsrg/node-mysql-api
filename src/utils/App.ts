@@ -83,6 +83,7 @@ export class App {
   public static decodeJWT(token: any) {
     if (token) {
       try {
+        token = token.replace("jwt ", "");
         return jwt.verify(token, "SwanInfo");
       } catch (err) {
         return err;

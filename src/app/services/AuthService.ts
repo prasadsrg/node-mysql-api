@@ -101,6 +101,7 @@ export class AuthService {
         responseData.user.email = accountObj.email;
         responseData.user.mobile = accountObj.mobile;
         responseData.user.active = accountObj.active;
+        responseData.user.vid = accountObj.vid;
         responseData.user.branch_id = accountObj.branch.id;
 
         // var menuAccessObj = await this.accessMenuDAO.search({
@@ -206,10 +207,7 @@ export class AuthService {
     if (profileObj == null) {
       return Promise.reject({ message: "Invalid Credientials" });
     } else {
-      if (
-        profileObj.id.indexOf("SUPER_ADMIN") > -1 ||
-        profileObj.id.indexOf("SUPPORT_USER") > -1
-      ) {
+      if (profileObj.id.indexOf("SUPER_ADMIN") > -1 || profileObj.id.indexOf("SUPPORT_USER") > -1) {
         profileObj.password = hashSync(profileObj.password, 8);
       }
       console.log(profileObj);
@@ -278,9 +276,7 @@ export class AuthService {
                         <div style="background-color:#F9F9F9 ;width: 60%;height: 50%;padding-top: 3%;padding-bottom: 3%">
                         <div style="width: 50%;height: 30%;background-color:white;box-shadow:  3px 3px 10px #888888 ;padding: 40px;margin: auto;border-radius: 10px;">
                                 <h1 style="text-align: center;font-family: 'Roboto', sans-serif;">MeeTruck</h1>
-                                <p style="font-family: 'Roboto', sans-serif;line-height: 30px;">Hi ${
-                                  data.name
-                                },</p>
+                                <p style="font-family: 'Roboto', sans-serif;line-height: 30px;">Hi ${data.name},</p>
                             <p style="font-family: 'Roboto', sans-serif;line-height: 25px;">You told us you forgot your password. If you really did, Enter below OTP to choose a new password for Group code <br>
                                 
                             
@@ -302,14 +298,10 @@ export class AuthService {
 
         return Promise.resolve("Code has been sent to your Mail id");
       } else {
-        return Promise.reject(
-          "Technical issue in sending reset link, Sorry for Inconvience"
-        );
+        return Promise.reject("Technical issue in sending reset link, Sorry for Inconvience");
       }
     } catch (error) {
-      return Promise.reject(
-        "Technical issue in sending reset link, Sorry for Inconvience"
-      );
+      return Promise.reject("Technical issue in sending reset link, Sorry for Inconvience");
     }
   }
 
@@ -333,9 +325,7 @@ export class AuthService {
         return Promise.reject("Invalid Token");
       }
     } catch (error) {
-      return Promise.reject(
-        "Technical issue in Resetting Password, Sorry for Inconvience"
-      );
+      return Promise.reject("Technical issue in Resetting Password, Sorry for Inconvience");
     }
   }
 
@@ -363,9 +353,7 @@ export class AuthService {
         return Promise.reject("Invalid User");
       }
     } catch (error) {
-      return Promise.reject(
-        "Technical issue in Resetting Password, Sorry for Inconvience"
-      );
+      return Promise.reject("Technical issue in Resetting Password, Sorry for Inconvience");
     }
   }
 }
