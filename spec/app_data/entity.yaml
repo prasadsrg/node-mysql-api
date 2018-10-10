@@ -1,0 +1,13 @@
+/appdata/{id}:
+  get:
+    tags:
+      - AppData
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        example: PAYMENT_MODE_CASH
+    responses:
+      200:
+        description: "status:1 is success; status: 0 is failure;"

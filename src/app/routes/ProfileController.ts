@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { App } from "../../utils/App";
-import { ProfileService } from "../services/ProfileService";
 import { Props } from "../../utils/Props";
+import { ProfileService } from "../services/ProfileService";
 
 export class ProfileController {
   private router: Router = Router();
@@ -42,11 +42,12 @@ export class ProfileController {
         this.service.sessionInfo = request.body.sessionInfo;
         let result = null;
         App.PrintLog(this.constructor.name, "Entity", this.service.sessionInfo);
-        if (App.CheckSessionInfo(this.service.sessionInfo)) {
-          result = await this.service.entity(id);
-        } else {
-          throw this.service.sessionInfo ? this.service.sessionInfo : { message: Props.TOKEN_MESSAGE };
-        }
+        //  if (App.CheckSessionInfo(this.service.sessionInfo)) {
+        result = await this.service.entity(id);
+        console.log("***************************************");
+        //   } else {
+        //   throw this.service.sessionInfo ? this.service.sessionInfo : { message: Props.TOKEN_MESSAGE };
+        //    }
         response.send({ status: 1, data: result });
       } catch (error) {
         console.log(error);
