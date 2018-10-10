@@ -1,0 +1,56 @@
+/device:
+    put:
+        tags:
+            - Device
+        summary: "to create new or update existing Device"
+        description:
+            Device save.
+        parameters:
+          - name: body
+            in: body
+            schema:
+                type: object
+                properties:
+                    data:
+                        type: object
+                        properties:
+                            id:
+                                type: string
+                                example: ""
+                            imeiNo:
+                                type: string
+                                example: "IME101"
+                            registrationNo:
+                                type: string
+                                example: "80080"
+                            activationDate:
+                                type: Date
+                                example: "2016-02-19"
+                            expirationDate:
+                                type: Date
+                                example: "2018-02-19"
+                            deviceIn:
+                                type: string
+                                example: "XXXX"
+                            unitPrice:
+                                type: number
+                                example: "34"
+                            sgst:
+                                type: number
+                                example: "34"
+                            cgst:
+                                type: number
+                                example: "34"
+                            igst:
+                                type: number
+                                example: "34"
+                            active:
+                                type: boolean
+                                example: true 
+        responses:
+            200:
+                description: "status:1 is success; status: 0 is failure;"
+            400:
+                description: "Invalid Data"
+            500:
+                description: "Internal server error"

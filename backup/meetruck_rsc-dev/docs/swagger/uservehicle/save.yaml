@@ -1,0 +1,57 @@
+/uservehicle:
+    put:
+        tags:
+            - User Vehicle
+        summary: "to create new or update existing User Vehicle"
+        description:
+            User Vehicle save.
+        parameters:
+          - name: body
+            in: body
+            schema:
+                type: object
+                properties:
+                    data:
+                        type: object
+                        properties:
+                            id:
+                                type: string
+                                example: ""
+                            # profile:
+                            #     type: object
+                            #     properties:
+                            #         id:
+                            #             type: string
+                            #             example: "id"
+                            vehicle:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                        example: "id"
+                            device:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                        example: "id"
+                            primaryDriver:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                        example: "id"
+                            alternativeDriver:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                        example: "id"
+                            
+        responses:
+            200:
+                description: "status:1 is success; status: 0 is failure;"
+            400:
+                description: "Invalid Data"
+            500:
+                description: "Internal server error"
