@@ -22,9 +22,9 @@ export class ProfileService {
   async entity(id: string) {
     try {
       let data: any = await this.profileDao.entity(id);
-      return Promise.resolve(data);
+      return data;
     } catch (error) {
-      return Promise.reject(error);
+      throw error;
     }
   }
 
@@ -32,29 +32,24 @@ export class ProfileService {
     try {
       // reqData.grpcode = this.sessionInfo.grpcode;
       let data: any = await this.profileDao.search(reqData);
-      return Promise.resolve(data);
+      return data;
     } catch (error) {
-      return Promise.reject(error);
+      return error;
     }
   }
 
   async filter(reqData: any) {
     try {
       // reqData.grpcode = this.sessionInfo.grpcode;
-      if (
-        reqData.session.role == "SuperAdmin" ||
-        reqData.session.role == "SUPER_ADMIN"
-      ) {
+      if (reqData.session.role == "SuperAdmin" || reqData.session.role == "SUPER_ADMIN") {
         let data: any = await this.profileDao.search({});
-        return Promise.resolve(data);
+        return data;
       } else {
-        let profileData: any = await this.profileDao.searchByBranch(
-          reqData.session.branch
-        );
-        return Promise.resolve(profileData);
+        let profileData: any = await this.profileDao.searchByBranch(reqData.session.branch);
+        return profileData;
       }
     } catch (error) {
-      return Promise.reject(error);
+      return error;
     }
   }
 
@@ -62,7 +57,6 @@ export class ProfileService {
     try {
       let cond = await this.validate(item);
       if (cond == true) {
-        console.log("item");
         let addressData: any = await this.addressDao.save(item.address);
         let imgData: any = await this.imgDao.save(item.img);
         item.password = hashSync(item.password, 8);
@@ -71,20 +65,20 @@ export class ProfileService {
           id: item.id,
           message: Props.SAVED_SUCCESSFULLY
         };
-        return Promise.resolve(returnData);
+        return returnData;
       } else if (cond == "Email") {
         let returnData = {
           message: Props.EMAIL_EXISTS
         };
-        return Promise.reject(returnData);
+        return returnData;
       } else if (cond == "Mobile") {
         let returnData = {
           message: Props.MOBILE_EXISTS
         };
-        return Promise.reject(returnData);
+        return returnData;
       }
     } catch (error) {
-      return Promise.reject(error);
+      return error;
     }
   }
 
@@ -96,9 +90,9 @@ export class ProfileService {
         id: id,
         message: Props.REMOVED_SUCCESSFULLY
       };
-      return Promise.resolve(returnData);
+      return returnData;
     } catch (error) {
-      return Promise.reject(error);
+      return error;
     }
   }
 
@@ -112,10 +106,7 @@ export class ProfileService {
     let mdata = await this.profileDao.search({ mobile: item.mobile });
     if ((item.id && data.length > 1) || (!item.id && data.length > 0)) {
       return "Email";
-    } else if (
-      (item.id && mdata.length > 1) ||
-      (!item.id && mdata.length > 0)
-    ) {
+    } else if ((item.id && mdata.length > 1) || (!item.id && mdata.length > 0)) {
       return "Mobile";
     } else {
       if (!item.id) {
