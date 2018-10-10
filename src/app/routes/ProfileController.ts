@@ -43,12 +43,13 @@ export class ProfileController {
         let result = null;
         App.PrintLog(this.constructor.name, "Entity", this.service.sessionInfo);
         if (App.CheckSessionInfo(this.service.sessionInfo)) {
-          result = this.service.entity(id);
+          result = await this.service.entity(id);
         } else {
-          throw new Error(this.service.sessionInfo ? this.service.sessionInfo : { message: Props.TOKEN_MESSAGE });
+          throw this.service.sessionInfo ? this.service.sessionInfo : { message: Props.TOKEN_MESSAGE };
         }
-        response.send({ status: 0, data: result });
+        response.send({ status: 1, data: result });
       } catch (error) {
+        console.log(error);
         response.send({ status: 0, error: error });
       }
     });

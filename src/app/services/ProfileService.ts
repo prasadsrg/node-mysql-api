@@ -22,6 +22,7 @@ export class ProfileService {
   async entity(id: string) {
     try {
       let data: any = await this.profileDao.entity(id);
+      console.log(data);
       return data;
     } catch (error) {
       throw error;

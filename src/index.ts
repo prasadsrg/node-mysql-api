@@ -3,7 +3,7 @@ import AppExpress from "./apex/AppExpress";
 import { createConnection } from "typeorm";
 import * as Config from "./utils/Config";
 
-const port = 5001;
+const port = 5000;
 let run = async () => {
   const conn = await createConnection(Config.dbOptions);
   console.log(" ************************************** " + conn.isConnected);

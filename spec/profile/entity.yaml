@@ -1,10 +1,10 @@
-/auth:
-  post:
+/profile/{id}:
+  get:
     tags:
       - Profile
     parameters:
       - name: id
-        in: query
+        in: path
         required: true
         type: string
     responses:
