@@ -3,6 +3,7 @@ import * as path from "path";
 import * as fs from "fs";
 import * as jwt from "jsonwebtoken";
 import { Transport, createTransport } from "nodemailer";
+import * as Config from "./Config";
 
 export class App {
   private static uniqueId: number = 0;
@@ -95,14 +96,11 @@ export class App {
 
   public static createEmailAccount() {
     return createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
+      host: Config.mailOptions.host,
+      port: Config.mailOptions.port,
       secure: true,
       requireTLS: true,
-      auth: {
-        user: "elit.naveen@gmail.com",
-        pass: "kddintepfsnefnrw"
-      }
+      auth: { user: Config.mailOptions.user, pass: Config.mailOptions.pass }
     });
   }
   public static CheckSessionInfo(data: any) {

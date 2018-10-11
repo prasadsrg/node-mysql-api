@@ -4,6 +4,7 @@ import { createConnection } from "typeorm";
 import * as Config from "./utils/Config";
 
 const port = 5000;
+Config.setEnvConfig();
 let run = async () => {
   const conn = await createConnection(Config.dbOptions);
   console.log(" ************************************** " + conn.isConnected);

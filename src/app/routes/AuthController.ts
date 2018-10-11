@@ -31,62 +31,50 @@ export class AuthController {
     });
 
     //Forgot Password Controller
-    this.router.put(
-      "/forgotpassword",
-      async (request: Request, response: Response) => {
-        let reqData: any = request.body;
-        // let sessionInfo: any = {};
-        let result: any = null;
-        console.log(reqData.data);
-        if (reqData.data) {
-          // sessionInfo.grpcode = reqData.data.grpcode;
-          // this.authService.sessionInfo = sessionInfo;
-          result = this.authService.forgotPassword(reqData.data);
-        } else {
-          result = { message: "Invalid Data" };
-        }
-        App.Send(request, response, result);
+    this.router.get("/", async (request: Request, response: Response) => {
+      let reqData: any = request.query;
+
+      // let sessionInfo: any = {};
+      let result: any = null;
+      // console.log(reqData.data);
+      if (reqData) {
+        result = this.authService.forgotPassword(reqData);
+      } else {
+        result = { message: "Invalid Data" };
       }
-    );
+      console.log(result);
+      App.Send(request, response, result);
+    });
 
     //Reset Password
-    this.router.put(
-      "/resetpassword",
-      async (request: Request, response: Response) => {
-        let reqData: any = request.body;
-        // let sessionInfo: any = {};
-        let result: any = null;
-        console.log(reqData.data);
-        if (reqData.data) {
-          // sessionInfo.grpcode = reqData.data.grpcode;
-          //this.authService.sessionInfo = sessionInfo;
-          result = this.authService.resetPassword(reqData.data);
-        } else {
-          result = { message: "Invalid Data" };
-        }
-        App.Send(request, response, result);
+    this.router.put("/", async (request: Request, response: Response) => {
+      let reqData: any = request.body;
+      let result: any = null;
+      console.log(reqData.data);
+      if (reqData.data) {
+        result = this.authService.resetPassword(reqData.data);
+      } else {
+        result = { message: "Invalid Data" };
       }
-    );
+      App.Send(request, response, result);
+    });
 
     //Change Password
-    this.router.put(
-      "/changepassword",
-      async (request: Request, response: Response) => {
-        let reqData: any = request.body;
-        // reqData.id = this.authService.sessionInfo.id;
-        // let sessionInfo: any = {};
-        let result: any = null;
-        console.log(reqData.data);
-        if (reqData.data) {
-          // sessionInfo.grpcode = reqData.data.grpcode;
-          //this.authService.sessionInfo = sessionInfo;
-          result = this.authService.changePassword(reqData.data);
-        } else {
-          result = { message: "Invalid Data" };
-        }
-        App.Send(request, response, result);
-      }
-    );
+    // this.router.put("/changepassword", async (request: Request, response: Response) => {
+    //   let reqData: any = request.body;
+    //   // reqData.id = this.authService.sessionInfo.id;
+    //   // let sessionInfo: any = {};
+    //   let result: any = null;
+    //   console.log(reqData.data);
+    //   if (reqData.data) {
+    //     // sessionInfo.grpcode = reqData.data.grpcode;
+    //     //this.authService.sessionInfo = sessionInfo;
+    //     result = this.authService.changePassword(reqData.data);
+    //   } else {
+    //     result = { message: "Invalid Data" };
+    //   }
+    //   App.Send(request, response, result);
+    // });
     return this.router;
   }
 }

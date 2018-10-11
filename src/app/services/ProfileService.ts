@@ -5,7 +5,7 @@ import { AddressDAO } from "../repos/AddressDAO";
 import { ImgDAO } from "../repos/ImgDAO";
 import { Props } from "../../utils/Props";
 import { Repository, QueryBuilder } from "typeorm";
-import { hashSync, compare } from "bcryptjs";
+import { hashSync, compareSync } from "bcryptjs";
 
 export class ProfileService {
   public sessionInfo: any;
@@ -94,6 +94,34 @@ export class ProfileService {
       return returnData;
     } catch (error) {
       return error;
+    }
+  }
+
+  async changePassword(reqData: any) {
+    try {
+      console.log(reqData);
+      let data: any = await this.profileDao.entity(reqData.id);
+      console.log(data);
+      if (data) {
+        let check = compareSync(reqData.oldPassword, data.password);
+        console.log(check);
+        if (check) {
+          let pwd = hashSync(reqData.newPassword, 8);
+          let newPassword = {
+            id: reqData.id,
+            password: pwd
+          };
+          console.log(newPassword);
+          let newData: any = await this.profileDao.save(newPassword);
+          return Promise.resolve("New Password Set Successfully");
+        } else {
+          return Promise.reject("Invalid Password");
+        }
+      } else {
+        return Promise.reject("Invalid User");
+      }
+    } catch (error) {
+      return Promise.reject("Technical issue in Resetting Password, Sorry for Inconvience");
     }
   }
 

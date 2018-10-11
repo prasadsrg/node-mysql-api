@@ -1,5 +1,6 @@
 /auth:
   post:
+    summary: Sign In
     tags:
       - Access
     parameters:

@@ -74,7 +74,7 @@ export class AuthService {
         .save(newAccount)
         .then(() => {
           return this.retrieve({
-            email: reqData.userId,
+            email: reqData.userid,
             password: reqData.password,
             provider: "email"
           });
@@ -87,10 +87,10 @@ export class AuthService {
     }
   }
 
-  async reteriveProfileDetails(userId: any) {
+  async reteriveProfileDetails(userid: any) {
     try {
       var responseData: any = {};
-      let query = { id: userId };
+      let query = { id: userid };
 
       var accountObj: any = await this.profileDAO.findOne(query);
       if (accountObj != null) {
@@ -133,14 +133,14 @@ export class AuthService {
   }
 
   //User Login Details
-  // async reteriveUserDetails(userId: string) {
+  // async reteriveUserDetails(userid: string) {
   //     try {
   //         var responseData: any = {};
   //         let query = {};
-  //         if(typeof(userId) == "number" && userId > 9){
-  //             query = { mobile: userId, grpcode: this.sessionInfo.grpcode };
+  //         if(typeof(userid) == "number" && userid > 9){
+  //             query = { mobile: userid, grpcode: this.sessionInfo.grpcode };
   //         }else {
-  //             query = { email: userId, grpcode: this.sessionInfo.grpcode }
+  //             query = { email: userid, grpcode: this.sessionInfo.grpcode }
   //         }
   //         var accountObj: any = await this.profileDAO.findOne(query);
   //         if (accountObj != null) {
@@ -185,18 +185,18 @@ export class AuthService {
     let dataList = reqData.username.split("-");
     if (dataList.length > 1) {
       reqData.vid = dataList[0];
-      reqData.userId = dataList[1];
+      reqData.userid = dataList[1];
     } else {
       isVid = false;
-      reqData.userId = reqData.username;
+      reqData.userid = reqData.username;
     }
 
     var responseData: any = {};
     let query: any = {};
-    if (!isNaN(reqData.userId) && reqData.userId > 9) {
-      query = { mobile: reqData.userId };
+    if (!isNaN(reqData.userid) && reqData.userid > 9) {
+      query = { mobile: reqData.userid };
     } else {
-      query = { email: reqData.userId };
+      query = { email: reqData.userid };
     }
     if (isVid) {
       query["vid"] = reqData.vid;
@@ -207,7 +207,7 @@ export class AuthService {
     if (profileObj == null) {
       return Promise.reject({ message: "Invalid Credientials" });
     } else {
-      if (profileObj.id.indexOf("SUPER_ADMIN") > -1 || profileObj.id.indexOf("SUPPORT_USER") > -1) {
+      if (profileObj.id.indexOf("SUPER_ADMIN") > -1) {
         profileObj.password = hashSync(profileObj.password, 8);
       }
       console.log(profileObj);
@@ -231,7 +231,7 @@ export class AuthService {
     try {
       var responseData: any = {};
       var profileObj: any = await this.profileDAO.search({
-        email: reqData.userId
+        email: reqData.userid
       });
       profileObj = profileObj[0];
       if (profileObj != null) {
@@ -246,24 +246,28 @@ export class AuthService {
 
   async forgotPassword(reqData: any) {
     try {
-      let query = {};
-      if (typeof reqData.userId == "number" && reqData.userId > 9) {
-        query = { mobile: reqData.userId };
+      let query: any = {};
+      if (!isNaN(reqData.userid) && reqData.userid > 9) {
+        query = { mobile: reqData.userid };
       } else {
-        query = { email: reqData.userId };
+        query = { email: reqData.userid };
       }
-      //console.log(reqData)
+      if (reqData.vid) {
+        query.vid = reqData.vid;
+      }
+      console.log(query);
       const uname = await this.profileDAO.findOne(query);
       //Generating Random Token
       if (uname == null || uname == undefined) {
         return Promise.reject("Not a Registered User");
       }
+      console.log(uname);
       const tok = generate({ length: 4, charset: "numeric" });
       console.log(tok);
       uname.token = tok;
       let data: any = await this.profileDAO.save(uname);
       const mailOptions = {
-        from: '"Mee Truck" <elit.naveen@gmail.com>', // sender address
+        from: '"DFF Tech" <dfftech@gmail.com>', // sender address
         to: uname.email, // list of receivers
         subject: "Password Reset Link", // Subject line
         //text: 'http://localhost:4200/auth/resetpassword/?t='+tok, // plain text body
@@ -275,7 +279,7 @@ export class AuthService {
                         <body>
                         <div style="background-color:#F9F9F9 ;width: 60%;height: 50%;padding-top: 3%;padding-bottom: 3%">
                         <div style="width: 50%;height: 30%;background-color:white;box-shadow:  3px 3px 10px #888888 ;padding: 40px;margin: auto;border-radius: 10px;">
-                                <h1 style="text-align: center;font-family: 'Roboto', sans-serif;">MeeTruck</h1>
+                                <h1 style="text-align: center;font-family: 'Roboto', sans-serif;"> DFF Tech </h1>
                                 <p style="font-family: 'Roboto', sans-serif;line-height: 30px;">Hi ${data.name},</p>
                             <p style="font-family: 'Roboto', sans-serif;line-height: 25px;">You told us you forgot your password. If you really did, Enter below OTP to choose a new password for Group code <br>
                                 
@@ -307,50 +311,24 @@ export class AuthService {
 
   async resetPassword(reqData: any) {
     try {
-      let query = {};
-      if (typeof reqData.userId == "number" && reqData.userId > 9) {
-        query = { mobile: reqData.userId, passwordToken: reqData.token };
+      let query: any = {};
+      if (!isNaN(reqData.userid) && reqData.userid > 9) {
+        query = { mobile: reqData.userid, token: reqData.token };
       } else {
-        query = { email: reqData.userId, passwordToken: reqData.passwordToken };
+        query = { email: reqData.userid, token: reqData.token };
       }
-      // console.log(query)
+      if (reqData.vid) {
+        query.vid = reqData.vid;
+      }
       let data: any = await this.profileDAO.findOne(query);
       // console.log(data)
       if (data) {
-        data.passwordToken = null;
-        data.password = reqData.password;
+        data.token = null;
+        data.password = hashSync(reqData.password, 8);
         let newData: any = await this.profileDAO.save(data);
         return Promise.resolve("New Password Set Successfully");
       } else {
         return Promise.reject("Invalid Token");
-      }
-    } catch (error) {
-      return Promise.reject("Technical issue in Resetting Password, Sorry for Inconvience");
-    }
-  }
-
-  async changePassword(reqData: any) {
-    try {
-      console.log(reqData);
-      let data: any = await this.profileDAO.entity(reqData.id);
-      console.log(data);
-      if (data) {
-        let check = compareSync(reqData.oldPassword, data.password);
-        console.log(check);
-        if (check) {
-          let pwd = hashSync(reqData.newPassword, 8);
-          let newPassword = {
-            id: reqData.id,
-            password: pwd
-          };
-          console.log(newPassword);
-          let newData: any = await this.profileDAO.save(newPassword);
-          return Promise.resolve("New Password Set Successfully");
-        } else {
-          return Promise.reject("Invalid Password");
-        }
-      } else {
-        return Promise.reject("Invalid User");
       }
     } catch (error) {
       return Promise.reject("Technical issue in Resetting Password, Sorry for Inconvience");
