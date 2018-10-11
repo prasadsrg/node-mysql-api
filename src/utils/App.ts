@@ -2,6 +2,7 @@
 import * as path from "path";
 import * as fs from "fs";
 import * as jwt from "jsonwebtoken";
+import * as Handlebars from "handlebars";
 import { Transport, createTransport } from "nodemailer";
 import * as Config from "./Config";
 
@@ -36,6 +37,16 @@ export class App {
         respObj.error = err;
         res.jsonp(respObj);
       });
+  }
+  public static HtmlRender(fileName: string, data: Object) {
+    var source = path.join(__dirname, "/../../assets/templates/" + fileName + ".html");
+    console.log("Html Source: " + source);
+    source = fs.readFileSync(source, "utf8");
+    var template = Handlebars.compile(source);
+    data = JSON.parse(JSON.stringify(data));
+    var result = template(data);
+    console.log(result);
+    return result;
   }
 
   // public static Print(template: any, res: any, promise: any) {
@@ -78,10 +89,10 @@ export class App {
   //     });
   // }
 
-  public static encodeJWT(data: any) {
+  public static EncodeJWT(data: any) {
     return jwt.sign(data, "SwanInfo");
   }
-  public static decodeJWT(token: any) {
+  public static DecodeJWT(token: any) {
     if (token) {
       try {
         token = token.replace("jwt ", "");
@@ -94,7 +105,7 @@ export class App {
     }
   }
 
-  public static createEmailAccount() {
+  public static CreateEmailAccount() {
     return createTransport({
       host: Config.mailOptions.host,
       port: Config.mailOptions.port,
@@ -103,7 +114,7 @@ export class App {
       auth: { user: Config.mailOptions.user, pass: Config.mailOptions.pass }
     });
   }
-  public static CheckSessionInfo(data: any) {
+  public static ValildateUserAccess(data: any, component: string, access: string) {
     console.log(data);
     if (data) {
       if (data.name && data.message && data.name.lowercase().indexOf("error") > -1) {

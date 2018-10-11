@@ -36,7 +36,6 @@ export default class AppExpress {
       res.setHeader("Access-Control-Allow-Origin", "*");
       res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
       res.setHeader("Access-Control-Allow-Headers", "accept, Content-Type, Authorization");
-
       if (req.headers["content-type"] && req.headers["content-type"].indexOf("application/x-www-form-urlencoded") > -1) {
         this.parsePost(req, (data: any) => {
           if (data && data != "") {
@@ -53,7 +52,7 @@ export default class AppExpress {
   }
 
   private addSessionInfo = (req: any) => {
-    let sessionInfo = App.decodeJWT(req.headers["authorization"]);
+    let sessionInfo = App.DecodeJWT(req.headers["authorization"]);
     console.log("sessionInfo: ");
     console.log(sessionInfo);
     console.log("-----------------------------------------------------");

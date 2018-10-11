@@ -29,7 +29,7 @@ export class AuthService {
       google: "google",
       linkedin: "linkedin"
     };
-    this.transporter = App.createEmailAccount();
+    this.transporter = App.CreateEmailAccount();
   }
 
   retrieve(reqData: any): any {
@@ -109,7 +109,7 @@ export class AuthService {
         //   active: accountObj.active
         // });
         // responseData.menuList = menuAccessObj;
-        responseData.access_token = App.encodeJWT(responseData.user);
+        responseData.access_token = App.EncodeJWT(responseData.user);
         //responseData.decodejwt = App.decodeJWT(responseData.jwt);
         // var branch: any = await this.branchDAO.findOne(accountObj.branch.id);
         // if (branch) {
@@ -271,26 +271,7 @@ export class AuthService {
         to: uname.email, // list of receivers
         subject: "Password Reset Link", // Subject line
         //text: 'http://localhost:4200/auth/resetpassword/?t='+tok, // plain text body
-        html: `<!DOCTYPE html>
-                        <html>
-                        <head>
-                            <title>Password Reset</title>
-                        </head>
-                        <body>
-                        <div style="background-color:#F9F9F9 ;width: 60%;height: 50%;padding-top: 3%;padding-bottom: 3%">
-                        <div style="width: 50%;height: 30%;background-color:white;box-shadow:  3px 3px 10px #888888 ;padding: 40px;margin: auto;border-radius: 10px;">
-                                <h1 style="text-align: center;font-family: 'Roboto', sans-serif;"> DFF Tech </h1>
-                                <p style="font-family: 'Roboto', sans-serif;line-height: 30px;">Hi ${data.name},</p>
-                            <p style="font-family: 'Roboto', sans-serif;line-height: 25px;">You told us you forgot your password. If you really did, Enter below OTP to choose a new password for Group code <br>
-                                
-                            
-                            </p>
-                            <h2 style="text-align:center"> ${tok} </h2>
-                            <p>If you didn't mean to reset your password, then you can just ignore this email; your password will not change.</p>
-                        </div>
-                        </div>
-                        </body>
-                        </html>` // html body
+        html: App.HtmlRender("OtpSend", { data: { name: uname.name, token: uname.token } }) // html body
       };
       if (data) {
         this.transporter.sendMail(mailOptions, (err: any, info: any) => {
