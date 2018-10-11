@@ -4,6 +4,7 @@ import { Props } from "../../utils/Props";
 import { AppDataService } from "../services/AppDataService";
 
 export class AppDataController {
+  private componentName: String = "AppData";
   private router: Router = Router();
   private service = new AppDataService();
 
@@ -14,7 +15,7 @@ export class AppDataController {
         this.service.sessionInfo = request.body.sessionInfo;
         let result = null;
         App.PrintLog(this.constructor.name, "Entity", this.service.sessionInfo);
-        if (App.CheckSessionInfo(this.service.sessionInfo)) {
+        if (App.ValildateUserAccess(this.service.sessionInfo, this.componentName, Props.ACCESS_WRITE)) {
           result = await this.service.entity(id);
         } else {
           throw this.service.sessionInfo ? this.service.sessionInfo : { message: Props.TOKEN_MESSAGE };

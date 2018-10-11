@@ -114,7 +114,7 @@ export class App {
       auth: { user: Config.mailOptions.user, pass: Config.mailOptions.pass }
     });
   }
-  public static ValildateUserAccess(data: any, component: string, access: string) {
+  public static ValildateUserAccess(data: any, component: String, access: String) {
     console.log(data);
     if (data) {
       if (data.name && data.message && data.name.lowercase().indexOf("error") > -1) {

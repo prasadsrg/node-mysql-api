@@ -1,6 +1,10 @@
 export class Props {
   public static APP_NAME: string = "DFF Tech";
   public static SALT_KEY: string = "SALT256DL";
+
+  public static ACCESS_READ = "READ";
+  public static ACCESS_WRITE = "WRITE";
+
   public static TOKEN_MESSAGE: string = "Please enter the token.";
   public static SAVED_SUCCESSFULLY: string = "Saved Successfully.";
   public static REMOVED_SUCCESSFULLY: string = "Removed Successfully.";
