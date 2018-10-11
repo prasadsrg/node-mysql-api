@@ -1,0 +1,32 @@
+/appdata:
+  put:
+    tags:
+      - AppData
+    parameters:
+      - name: body
+        in: body
+        schema:
+          type: object
+          properties:
+            data:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: null
+                name:
+                  type: string
+                  example: "cash"
+                code:
+                  type: string
+                  example: "PAYMENT_MODE"
+                data:
+                  type: string
+                  example: "CASH"
+                active:
+                  type: boolean
+                  example: true
+
+    responses:
+      200:
+        description: "status:1 is success; status: 0 is failure;"

@@ -24,7 +24,7 @@ export let mailOptions: any = {
   host: "smtp.gmail.com",
   port: 465,
   user: "dfftech@gmail.com",
-  pass: "******"
+  pass: "Test!234"
 };
 
 export let setEnvConfig = () => {

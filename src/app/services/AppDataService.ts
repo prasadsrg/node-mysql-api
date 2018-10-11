@@ -19,6 +19,15 @@ export class AppDataService {
       throw error;
     }
   }
+  async filter(reqData: any) {
+    try {
+      reqData.vid = this.sessionInfo.vid;
+      let data: any = await this.appDataDao.search(reqData);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
 
   async save(item: AppData) {
     try {
@@ -59,6 +68,7 @@ export class AppDataService {
       let uid = App.UniqueNumber();
       item.id = uid;
     }
+    item.vid = this.sessionInfo.vid;
     return true;
   }
 }

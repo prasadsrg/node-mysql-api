@@ -15,8 +15,47 @@ export class AppDataController {
         this.service.sessionInfo = request.body.sessionInfo;
         let result = null;
         App.PrintLog(this.constructor.name, "Entity", this.service.sessionInfo);
-        if (App.ValildateUserAccess(this.service.sessionInfo, this.componentName, Props.ACCESS_WRITE)) {
+        if (App.ValildateUserAccess(this.service.sessionInfo, this.componentName, Props.ACCESS_READ)) {
           result = await this.service.entity(id);
+        } else {
+          throw this.service.sessionInfo ? this.service.sessionInfo : { message: Props.TOKEN_MESSAGE };
+        }
+        response.send({ status: 1, data: result });
+      } catch (error) {
+        console.log(error);
+        response.send({ status: 0, error: error });
+      }
+    });
+
+    this.router.post("/", async (request: Request, response: Response) => {
+      try {
+        let reqData: any;
+        reqData = request.body.data ? request.body.data : {};
+        // reqData.session = request.body.sessionInfo;
+        this.service.sessionInfo = request.body.sessionInfo;
+        App.PrintLog(this.constructor.name, "Search", this.service.sessionInfo);
+        let result = null;
+        if (App.ValildateUserAccess(this.service.sessionInfo, this.componentName, Props.ACCESS_READ)) {
+          result = await this.service.filter(reqData);
+        } else {
+          throw this.service.sessionInfo ? this.service.sessionInfo : { message: Props.TOKEN_MESSAGE };
+        }
+        response.send({ status: 1, data: result });
+      } catch (error) {
+        console.log(error);
+        response.send({ status: 0, error: error });
+      }
+    });
+    this.router.put("/", async (request: Request, response: Response) => {
+      try {
+        let reqData: any;
+        reqData = request.body.data ? request.body.data : {};
+        // reqData.session = request.body.sessionInfo;
+        this.service.sessionInfo = request.body.sessionInfo;
+        App.PrintLog(this.constructor.name, "SAVE", this.service.sessionInfo);
+        let result = null;
+        if (App.ValildateUserAccess(this.service.sessionInfo, this.componentName, Props.ACCESS_WRITE)) {
+          result = await this.service.save(reqData);
         } else {
           throw this.service.sessionInfo ? this.service.sessionInfo : { message: Props.TOKEN_MESSAGE };
         }
