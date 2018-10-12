@@ -18,6 +18,8 @@ export class ProfileDAO {
       .innerJoinAndSelect("profile.address", "address")
       .innerJoinAndSelect("profile.branch", "branch")
       .orderBy("profile.updatedOn", "DESC")
+      .where(data)
+      .andWhere("profile.role != 'SUPER_ADMIN'")
       .getMany();
   }
 

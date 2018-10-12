@@ -9,32 +9,42 @@ export class ProfileController {
   private service = new ProfileService();
 
   getRouter(): Router {
-    this.router.post("/", async (request: Request, response: Response) => {
-      let reqData: any;
-      reqData = request.body.data ? request.body.data : {};
-      reqData.session = request.body.sessionInfo;
-      this.service.sessionInfo = request.body.sessionInfo;
-      App.PrintLog(this.constructor.name, "Search", this.service.sessionInfo);
-      let result = null;
-      if (App.ValildateUserAccess(this.service.sessionInfo, this.componentName, Props.ACCESS_READ)) {
-        result = await this.service.filter(reqData);
-      } else {
-        result = this.service.sessionInfo ? this.service.sessionInfo : { message: Props.TOKEN_MESSAGE };
+    this.router.get("/", async (request: Request, response: Response) => {
+      try {
+        let reqData: any;
+        reqData = request.params ? request.params : {};
+        reqData.session = request.body.sessionInfo;
+        this.service.sessionInfo = request.body.sessionInfo;
+        App.PrintLog(this.constructor.name, "Search", this.service.sessionInfo);
+        let result = null;
+        if (App.ValildateUserAccess(this.service.sessionInfo, this.componentName, Props.ACCESS_READ)) {
+          result = await this.service.search(reqData);
+        } else {
+          throw this.service.sessionInfo ? this.service.sessionInfo : { message: Props.TOKEN_MESSAGE };
+        }
+        response.send({ status: 1, data: result });
+      } catch (error) {
+        console.log(error);
+        response.send({ status: 0, error: error });
       }
-      App.Send(request, response, result);
     });
 
     this.router.put("/", async (request: Request, response: Response) => {
-      let reqData = request.body ? request.body.data : {};
-      this.service.sessionInfo = request.body.sessionInfo;
-      App.PrintLog(this.constructor.name, "Save", this.service.sessionInfo);
-      let result = null;
-      if (App.ValildateUserAccess(this.service.sessionInfo, this.componentName, Props.ACCESS_WRITE)) {
-        result = await this.service.save(reqData);
-      } else {
-        result = this.service.sessionInfo ? this.service.sessionInfo : { message: Props.TOKEN_MESSAGE };
+      try {
+        let reqData = request.body ? request.body.data : {};
+        this.service.sessionInfo = request.body.sessionInfo;
+        App.PrintLog(this.constructor.name, "Save", this.service.sessionInfo);
+        let result = null;
+        if (App.ValildateUserAccess(this.service.sessionInfo, this.componentName, Props.ACCESS_WRITE)) {
+          result = await this.service.save(reqData);
+        } else {
+          throw this.service.sessionInfo ? this.service.sessionInfo : { message: Props.TOKEN_MESSAGE };
+        }
+        response.send({ status: 1, data: result });
+      } catch (error) {
+        console.log(error);
+        response.send({ status: 0, error: error });
       }
-      App.Send(request, response, result);
     });
 
     this.router.get("/:id", async (request: Request, response: Response) => {

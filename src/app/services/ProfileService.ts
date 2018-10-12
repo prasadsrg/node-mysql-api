@@ -31,7 +31,7 @@ export class ProfileService {
 
   async search(reqData: any) {
     try {
-      // reqData.grpcode = this.sessionInfo.grpcode;
+      reqData.vid = this.sessionInfo.vid;
       let data: any = await this.profileDao.search(reqData);
       return data;
     } catch (error) {
@@ -41,7 +41,7 @@ export class ProfileService {
 
   async filter(reqData: any) {
     try {
-      // reqData.grpcode = this.sessionInfo.grpcode;
+      reqData.vid = this.sessionInfo.vid;
       if (reqData.session.role == "SuperAdmin" || reqData.session.role == "SUPER_ADMIN") {
         let data: any = await this.profileDao.search({});
         return data;
@@ -143,6 +143,7 @@ export class ProfileService {
         item.id = uid;
         item.address.id = uid;
         item.img.id = uid;
+        item.vid = this.sessionInfo.vid;
       }
       return true;
     }
