@@ -6,18 +6,19 @@ import { Branch } from "../entities/Branch";
 import { AccessMenu } from "../entities/AccessMenu";
 import { Img } from "../entities/Img";
 import { AppData } from "../entities/AppData";
+import { Consumer } from "../entities/Consumer";
 
 export let dbOptions: any = {
   name: "default",
   type: "mysql",
-  host: "qa.dfftech.com",
+  host: "localhost",
   port: 3306,
-  username: "abcd_user",
-  password: "abcd!234",
+  username: "root",
+  password: "",
   database: "abcd_db",
   logging: true,
   synchronize: false,
-  entities: [Profile, Address, Branch, AccessMenu, Img, AppData]
+  entities: [Profile, Address, Branch, AccessMenu, Img, AppData, Consumer]
 };
 
 export let mailOptions: any = {

@@ -32,7 +32,7 @@ export class AppDataService {
   async save(item: AppData) {
     try {
       if (await this.validate(item)) {
-        let appDataData: any = await this.appDataDao.save(item);
+        let appDataDao: any = await this.appDataDao.save(item);
         let returnData = {
           id: item.id,
           message: Props.SAVED_SUCCESSFULLY
