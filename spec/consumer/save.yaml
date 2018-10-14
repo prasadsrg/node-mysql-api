@@ -20,6 +20,9 @@
                 mobile:
                   type: string
                   example: "123456789"
+                vid:
+                  type: string
+                  example: "1234"
                 address:
                   type: object
                   properties:
