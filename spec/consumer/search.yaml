@@ -1,20 +1,38 @@
+# /consumer:
+#   get:
+#     tags:
+#       - Consumer
+#     parameters:
+#       - name: body
+#         in: body
+#         required: false
+#         schema:
+#           type: object
+#           properties:
+#             data:
+#               type: object
+#               properties:
+#                 name:
+#                   type: string
+#                   example: abcd
+#     responses:
+#       200:
+#         description: A single user item
+
 /consumer:
   get:
+    summary: Get All Consumers
     tags:
       - Consumer
     parameters:
-      - name: body
-        in: body
-        required: false
+      - in: query
+        name: params
         schema:
-          type: object
-          properties:
-            data:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: abcd
+          type: objects
+          additionalProperties:
+            type: string
+        style: form
+        explode: true
     responses:
       200:
-        description: A single user item
+        description: "status:1 is success; status: 0 is failure;"
