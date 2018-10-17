@@ -59,7 +59,9 @@ export default class AppExpress {
     if (!req.body) {
       req.body = {};
     }
-    req.body.sessionInfo = sessionInfo.identity;
+    if (sessionInfo) {
+      req.body.sessionInfo = sessionInfo.identity;
+    }
   };
 
   private parsePost(req: express.Request, callback: any) {

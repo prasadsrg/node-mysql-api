@@ -23,7 +23,7 @@
   get:
     summary: Get All AccessMenu
     tags:
-      - AccessMenu
+      - Access
     parameters:
       - in: query
         name: params

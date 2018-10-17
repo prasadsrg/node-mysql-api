@@ -4,28 +4,28 @@ import { Props } from "../../utils/Props";
 import { AccessMenuService } from "../services/AccessMenuService";
 
 export class AccessMenuController {
-  private componentName: string = "accessmenu";
+  private componentName: string = "accessMenu";
   private router: Router = Router();
   private service = new AccessMenuService();
 
   getRouter(): Router {
-    this.router.get("/:id", async (request: Request, response: Response) => {
-      try {
-        const id: any = request.params.id;
-        this.service.sessionInfo = request.body.sessionInfo;
-        let result = null;
-        App.PrintLog(this.constructor.name, "Entity", this.service.sessionInfo);
-        if (App.ValildateUserAccess(this.service.sessionInfo, this.componentName, Props.ACCESS_READ)) {
-          result = await this.service.entity(id);
-        } else {
-          throw this.service.sessionInfo ? this.service.sessionInfo : { message: Props.TOKEN_MESSAGE };
-        }
-        response.send({ status: 1, data: result });
-      } catch (error) {
-        console.log(error);
-        response.send({ status: 0, error: error });
-      }
-    });
+    // this.router.get("/:id", async (request: Request, response: Response) => {
+    //   try {
+    //     const id: any = request.params.id;
+    //     this.service.sessionInfo = request.body.sessionInfo;
+    //     let result = null;
+    //     App.PrintLog(this.constructor.name, "Entity", this.service.sessionInfo);
+    //     if (App.ValildateUserAccess(this.service.sessionInfo, this.componentName, Props.ACCESS_READ)) {
+    //       result = await this.service.entity(id);
+    //     } else {
+    //       throw this.service.sessionInfo ? this.service.sessionInfo : { message: Props.TOKEN_MESSAGE };
+    //     }
+    //     response.send({ status: 1, data: result });
+    //   } catch (error) {
+    //     console.log(error);
+    //     response.send({ status: 0, error: error });
+    //   }
+    //     });
 
     // this.router.put("/", async (request: Request, response: Response) => {
     //   try {
@@ -49,7 +49,7 @@ export class AccessMenuController {
     this.router.get("/", async (request: Request, response: Response) => {
       try {
         let reqData: any;
-        reqData = request.params ? request.params : {};
+        reqData = request.query ? request.query : {};
         reqData.session = request.body.sessionInfo;
         this.service.sessionInfo = request.body.sessionInfo;
         App.PrintLog(this.constructor.name, "Search", this.service.sessionInfo);
