@@ -14,7 +14,7 @@ export let dbOptions: any = {
   host: "localhost",
   port: 3306,
   username: "root",
-  password: "",
+  password: "Admin!234",
   database: "abcd_db",
   logging: true,
   synchronize: false,
