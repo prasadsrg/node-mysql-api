@@ -135,10 +135,10 @@ export class ProfileService {
     item.updatedBy = this.sessionInfo.id;
     let data = await this.profileDao.search({ email: item.email });
     let mdata = await this.profileDao.search({ mobile: item.mobile });
-    if(!item.id){
-      if(data.length > 0){
+    if (!item.id) {
+      if (data.length > 0) {
         return "Email";
-      } else if(mdata.length > 0){
+      } else if (mdata.length > 0) {
         return "Mobile";
       } else {
         let uid = App.UniqueNumber();
@@ -148,13 +148,13 @@ export class ProfileService {
         item.vid = this.sessionInfo.vid;
       }
     } else {
-      if(item.email != previousData.email ){
-        if(data.length > 0){
+      if (item.email != previousData.email) {
+        if (data.length > 0) {
           return "Email";
         }
       }
-      if(item.mobile != previousData.mobile ){
-        if(mdata.length > 0){
+      if (item.mobile != previousData.mobile) {
+        if (mdata.length > 0) {
           return "Mobile";
         }
       }
