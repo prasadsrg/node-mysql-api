@@ -27,11 +27,11 @@ export class AppDataController {
       }
     });
 
-    this.router.post("/", async (request: Request, response: Response) => {
+    this.router.get("/", async (request: Request, response: Response) => {
       try {
         let reqData: any;
         reqData = request.body.data ? request.body.data : {};
-        // reqData.session = request.body.sessionInfo;
+        reqData.session = request.body.sessionInfo;
         this.service.sessionInfo = request.body.sessionInfo;
         App.PrintLog(this.constructor.name, "Search", this.service.sessionInfo);
         let result = null;
