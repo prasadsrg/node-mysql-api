@@ -1,0 +1,38 @@
+# AccessMenu Information Search
+# ---
+# tags:
+#   - Access
+# parameters:
+#   - name: body
+#     in: body
+#     required: false
+#     schema:
+#       type: object
+#       properties:
+#           data:
+#             type: object
+#             properties:
+#               role:
+#                 type: string
+#                 example: ADMIN
+# responses:
+#  200:
+#    description: A single user item
+
+/accessmenu:
+  get:
+    summary: Get All AccessMenu
+    tags:
+      - AccessMenu
+    parameters:
+      - in: query
+        name: params
+        schema:
+          type: objects
+          additionalProperties:
+            type: string
+        style: form
+        explode: true
+    responses:
+      200:
+        description: "status:1 is success; status: 0 is failure;"
