@@ -10,10 +10,10 @@ import { AppData } from "../entities/AppData";
 export let dbOptions: any = {
   name: "default",
   type: "mysql",
-  host: "qa.dfftech.com",
+  host: "localhost",
   port: 3306,
-  username: "abcd_user",
-  password: "abcd!234",
+  username: "root",
+  password: "Admin!234",
   database: "abcd_db",
   logging: true,
   synchronize: false,
