@@ -22,7 +22,9 @@ export class AppDataService {
   async filter(reqData: any) {
     try {
       reqData.vid = this.sessionInfo.vid;
+      console.log(reqData);
       let data: any = await this.appDataDao.search(reqData);
+
       return data;
     } catch (error) {
       return error;
@@ -32,7 +34,7 @@ export class AppDataService {
   async save(item: AppData) {
     try {
       if (await this.validate(item)) {
-        let appDataData: any = await this.appDataDao.save(item);
+        let appDataDao: any = await this.appDataDao.save(item);
         let returnData = {
           id: item.id,
           message: Props.SAVED_SUCCESSFULLY

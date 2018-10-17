@@ -103,13 +103,15 @@ export class AuthService {
         responseData.user.active = accountObj.active;
         responseData.user.vid = accountObj.vid;
         responseData.user.branch_id = accountObj.branch.id;
-
+        responseData.identity = {};
+        responseData.identity = responseData.user;
+        delete responseData.user;
         // var menuAccessObj = await this.accessMenuDAO.search({
         //   role: accountObj.role,
         //   active: accountObj.active
         // });
         // responseData.menuList = menuAccessObj;
-        responseData.access_token = App.EncodeJWT(responseData.user);
+        responseData.access_token = App.EncodeJWT(responseData);
         //responseData.decodejwt = App.decodeJWT(responseData.jwt);
         // var branch: any = await this.branchDAO.findOne(accountObj.branch.id);
         // if (branch) {
@@ -281,12 +283,12 @@ export class AuthService {
           console.log(info);
         });
 
-        return Promise.resolve("Code has been sent to your Mail id");
+        return Promise.resolve({ message: "Code has been sent to your Mail id" });
       } else {
-        return Promise.reject("Technical issue in sending reset link, Sorry for Inconvience");
+        return Promise.reject({ message: "Technical issue in sending reset link, Sorry for Inconvience" });
       }
     } catch (error) {
-      return Promise.reject("Technical issue in sending reset link, Sorry for Inconvience");
+      return Promise.reject({ message: "Technical issue in sending reset link, Sorry for Inconvience" });
     }
   }
 
@@ -307,12 +309,12 @@ export class AuthService {
         data.token = null;
         data.password = hashSync(reqData.password, 8);
         let newData: any = await this.profileDAO.save(data);
-        return Promise.resolve("New Password Set Successfully");
+        return Promise.resolve({ message: "New Password Set Successfully" });
       } else {
-        return Promise.reject("Invalid Token");
+        return Promise.reject({ message: "Invalid Token" });
       }
     } catch (error) {
-      return Promise.reject("Technical issue in Resetting Password, Sorry for Inconvience");
+      return Promise.reject({ message: "Technical issue in Resetting Password, Sorry for Inconvience" });
     }
   }
 }

@@ -95,7 +95,7 @@ export class App {
   public static DecodeJWT(token: any) {
     if (token) {
       try {
-        token = token.replace("jwt ", "");
+        token = token.replace("jwt ", "").replace("JWT ", "");
         return jwt.verify(token, "SwanInfo");
       } catch (err) {
         return err;

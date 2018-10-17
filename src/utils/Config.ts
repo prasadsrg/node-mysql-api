@@ -6,6 +6,8 @@ import { Branch } from "../entities/Branch";
 import { AccessMenu } from "../entities/AccessMenu";
 import { Img } from "../entities/Img";
 import { AppData } from "../entities/AppData";
+import { Consumer } from "../entities/Consumer";
+import { AccessData } from "../entities/AccessData";
 
 export let dbOptions: any = {
   name: "default",
@@ -17,7 +19,7 @@ export let dbOptions: any = {
   database: "abcd_db",
   logging: true,
   synchronize: false,
-  entities: [Profile, Address, Branch, AccessMenu, Img, AppData]
+  entities: [Profile, Address, Branch, AccessMenu, Img, AppData, Consumer, AccessData]
 };
 
 export let mailOptions: any = {

@@ -4,6 +4,9 @@ import { App } from "../utils/App";
 import { ProfileController } from "../app/routes/ProfileController";
 import { AuthController } from "../app/routes/AuthController";
 import { AppDataController } from "../app/routes/AppDataController";
+import { ConsumerController } from "../app/routes/ConsumerController";
+import { AccessMenuController } from "../app/routes/AccessMenuController";
+import { AccessDataController } from "../app/routes/AccessDataController";
 
 export class AppController {
   private router: Router = Router();
@@ -12,6 +15,9 @@ export class AppController {
     this.router.use("/auth", new AuthController().getRouter());
     this.router.use("/profile", new ProfileController().getRouter());
     this.router.use("/appdata", new AppDataController().getRouter());
+    this.router.use("/consumer", new ConsumerController().getRouter());
+    this.router.use("/accessmenu", new AccessMenuController().getRouter());
+    this.router.use("/accessdata", new AccessDataController().getRouter());
 
     return this.router;
   }
