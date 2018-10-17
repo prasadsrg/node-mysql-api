@@ -133,6 +133,7 @@ export class ProfileService {
     let query: {};
     let data = await this.profileDao.search({ email: item.email });
     let mdata = await this.profileDao.search({ mobile: item.mobile });
+
     if ((item.id && data.length > 1) || (!item.id && data.length > 0)) {
       return "Email";
     } else if ((item.id && mdata.length > 1) || (!item.id && mdata.length > 0)) {

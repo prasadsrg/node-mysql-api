@@ -30,7 +30,7 @@ export class AppDataController {
     this.router.get("/", async (request: Request, response: Response) => {
       try {
         let reqData: any;
-        reqData = request.body.data ? request.body.data : {};
+        reqData = request.query ? request.query : {};
         reqData.session = request.body.sessionInfo;
         this.service.sessionInfo = request.body.sessionInfo;
         App.PrintLog(this.constructor.name, "Search", this.service.sessionInfo);
