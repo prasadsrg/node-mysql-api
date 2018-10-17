@@ -47,20 +47,6 @@ export class ConsumerController {
     });
 
     this.router.get("/", async (request: Request, response: Response) => {
-      // try {
-      //   this.service.sessionInfo = request.body.sessionInfo;
-      //   App.PrintLog(this.constructor.name, "Search", this.service.sessionInfo);
-      //   if (App.ValildateUserAccess(this.service.sessionInfo, this.componentName, Props.ACCESS_READ)) {
-      //     result = await this.service.search(id);
-      //   } else {
-      //     throw this.service.sessionInfo ? this.service.sessionInfo : { message: Props.TOKEN_MESSAGE };
-      //   }
-      //   response.send({ status: 1, data: result });
-      // } catch (error) {
-      //   console.log(error);
-      //   response.send({ status: 0, error: error });
-      // }
-
       try {
         let reqData: any;
         reqData = request.params ? request.params : {};
