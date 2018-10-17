@@ -126,26 +126,40 @@ export class ProfileService {
   }
 
   async validate(item: Profile) {
+    let previousData = null;
     if (!item.id || item.id == "" || item.id == "0") {
       item.id = null;
+    } else {
+      previousData = await this.profileDao.findOne(item.id);
     }
     item.updatedBy = this.sessionInfo.id;
-    let query: {};
     let data = await this.profileDao.search({ email: item.email });
     let mdata = await this.profileDao.search({ mobile: item.mobile });
-    if ((item.id && data.length > 1) || (!item.id && data.length > 0)) {
-      return "Email";
-    } else if ((item.id && mdata.length > 1) || (!item.id && mdata.length > 0)) {
-      return "Mobile";
-    } else {
-      if (!item.id) {
+    if(!item.id){
+      if(data.length > 0){
+        return "Email";
+      } else if(mdata.length > 0){
+        return "Mobile";
+      } else {
         let uid = App.UniqueNumber();
         item.id = uid;
         item.address.id = uid;
         item.img.id = uid;
         item.vid = this.sessionInfo.vid;
       }
-      return true;
+    } else {
+      if(item.email != previousData.email ){
+        if(data.length > 0){
+          return "Email";
+        }
+      }
+      if(item.mobile != previousData.mobile ){
+        if(mdata.length > 0){
+          return "Mobile";
+        }
+      }
     }
+
+    return true;
   }
 }
