@@ -22,7 +22,9 @@ export class AppDataService {
   async filter(reqData: any) {
     try {
       reqData.vid = this.sessionInfo.vid;
+      console.log(reqData);
       let data: any = await this.appDataDao.search(reqData);
+
       return data;
     } catch (error) {
       return error;
