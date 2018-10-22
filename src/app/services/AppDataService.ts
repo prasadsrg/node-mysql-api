@@ -66,11 +66,30 @@ export class AppDataService {
   }
 
   async validate(item: AppData) {
+    let previousData = null;
     if (!item.id || item.id == "" || item.id == "0") {
-      let uid = App.UniqueNumber();
-      item.id = uid;
+      item.id = null;
+    } else {
+      previousData = await this.appDataDao.findOne(item.id);
     }
-    item.vid = this.sessionInfo.vid;
+    item.updatedBy = this.sessionInfo.id;
+    let data = await this.appDataDao.search({ name: item.name });
+    if (!item.id) {
+      if (data.length > 0) {
+        return "Name";
+      } else {
+        let uid = App.UniqueNumber();
+        item.id = uid;
+        item.vid = this.sessionInfo.vid;
+      }
+    } else {
+      if (item.name != previousData.name) {
+        if (data.length > 0) {
+          return "Name";
+        }
+      }
+    }
+
     return true;
   }
 }
