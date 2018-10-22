@@ -17,6 +17,7 @@ export class BranchDAO {
 
     return this.dao
       .createQueryBuilder("branch")
+      .where(data)
       .orderBy("branch.updatedOn", "DESC")
       .getMany();
   }

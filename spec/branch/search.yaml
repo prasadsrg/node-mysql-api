@@ -1,0 +1,17 @@
+/branch:
+  get:
+    summary: Get Branch
+    tags:
+      - Branch
+    parameters:
+      - in: query
+        name: params
+        schema:
+          type: objects
+          additionalProperties:
+            type: string
+        style: form
+        explode: true
+    responses:
+      200:
+        description: "status:1 is success; status: 0 is failure;"
