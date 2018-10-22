@@ -45,20 +45,24 @@ export class BranchService {
     item.updatedBy = this.sessionInfo.id;
     let query: {};
     console.log(item);
-    let data = await this.branchDao.search({ email: item.email });
-    let mdata = await this.branchDao.search({ mobile: item.mobile });
-    console.log(data);
-    if ((item.id && data.length > 1) || (!item.id && data.length > 0)) {
-      return "Email";
-    } else if ((item.id && mdata.length > 1) || (!item.id && mdata.length > 0)) {
-      return "Mobile";
-    } else {
+    // let data = await this.branchDao.search({ email: item.email });
+    // let mdata = await this.branchDao.search({ mobile: item.mobile });
+    let sdata: any = await this.branchDao.search({ isMain:item.isMain});
+    if( item.id && item.isMain && item.id != sdata.id ){
+      return "isMain"
+    } 
+    else {
       if (!item.id) {
-        let uid = App.UniqueNumber();
-        item.id = uid;
-        item.address.id = uid;
-        item.img.id = uid;
-        item.vid = this.sessionInfo.vid;
+        if(item.isMain && sdata.length > 0){
+          return "isMain"
+        } else {
+          let uid = App.UniqueNumber();
+          item.id = uid;
+          item.address.id = uid;
+          item.img.id = uid;
+          item.vid = this.sessionInfo.vid;
+   
+        }
       }
       return true;
     }
@@ -70,20 +74,15 @@ export class BranchService {
       if (cond == true) {
         let addressData: any = await this.addressDao.save(item.address);
         let imgData: any = await this.imgDao.save(item.img);
-        let profileData: any = await this.branchDao.save(item);
+        let branchData: any = await this.branchDao.save(item);
         let returnData = {
           id: item.id,
           message: Props.SAVED_SUCCESSFULLY
         };
         return returnData;
-      } else if (cond == "Email") {
+      }  if(cond == "isMain"){
         let returnData = {
-          message: Props.EMAIL_EXISTS
-        };
-        return returnData;
-      } else if (cond == "Mobile") {
-        let returnData = {
-          message: Props.MOBILE_EXISTS
+          message: Props.IS_MAIN_EXISTS
         };
         return returnData;
       }
