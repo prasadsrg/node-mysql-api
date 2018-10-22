@@ -33,7 +33,7 @@ export class AppDataService {
 
   async save(item: AppData) {
     try {
-      if (await this.validate(item)) {
+      if ((await this.validate(item)) == true) {
         let appDataDao: any = await this.appDataDao.save(item);
         let returnData = {
           id: item.id,
@@ -74,6 +74,9 @@ export class AppDataService {
     }
     item.updatedBy = this.sessionInfo.id;
     let data = await this.appDataDao.search({ name: item.name });
+    console.log(item);
+    console.log(previousData);
+    console.log(data);
     if (!item.id) {
       if (data.length > 0) {
         return "Name";
