@@ -12,4 +12,5 @@ export class Props {
   public static INVALID_AUTH: string = "Your not a valid Auth.";
   public static MOBILE_EXISTS: string = "Your mobile already exists";
   public static EMAIL_EXISTS: string = "Your email already exists";
+  public static IS_MAIN_EXISTS: string = "Main branch already exists";
 }

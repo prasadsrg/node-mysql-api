@@ -7,6 +7,8 @@ import { AppDataController } from "../app/routes/AppDataController";
 import { ConsumerController } from "../app/routes/ConsumerController";
 import { AccessMenuController } from "../app/routes/AccessMenuController";
 import { AccessDataController } from "../app/routes/AccessDataController";
+import { BranchController } from "../app/routes/BranchController";
+
 
 export class AppController {
   private router: Router = Router();
@@ -18,6 +20,8 @@ export class AppController {
     this.router.use("/consumer", new ConsumerController().getRouter());
     this.router.use("/accessmenu", new AccessMenuController().getRouter());
     this.router.use("/accessdata", new AccessDataController().getRouter());
+    this.router.use("/branch", new BranchController().getRouter());
+
 
     return this.router;
   }

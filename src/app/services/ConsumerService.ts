@@ -38,7 +38,10 @@ export class ConsumerService {
     }
   }
 
+<<<<<<< HEAD
  
+=======
+>>>>>>> 18474f614b3c6bad57937813c2491aecfcbc711f
   async validate(item: Consumer) {
     // if (!item.id || item.id == "" || item.id == "0") {
     //   let uid = App.UniqueNumber();
@@ -72,26 +75,6 @@ export class ConsumerService {
   }
 
   async save(item: Consumer) {
-    // try {
-    //   if (await this.validate(item)) {
-    //     let data: any = await this.consumerDao.save(item);
-    //     console.log(data);
-    //     let returnData = {
-    //       id: item.id,
-    //       message: Props.SAVED_SUCCESSFULLY
-    //     };
-    //     return returnData;
-    //   } else {
-    //     let returnData = {
-    //       message: Props.INVALID_DATA
-    //     };
-    //     console.log(returnData);
-    //     throw returnData;
-    //   }
-    // } catch (error) {
-    //   throw error;
-    // }
-
     try {
       let cond = await this.validate(item);
       if (cond == true) {
@@ -117,20 +100,6 @@ export class ConsumerService {
       }
     } catch (error) {
       return error;
-    }
-  }
-
-  async delete(id: any) {
-    try {
-      let data: Consumer = await this.consumerDao.entity(id);
-      let result: any = await this.consumerDao.delete(data);
-      let returnData = {
-        id: id,
-        message: Props.REMOVED_SUCCESSFULLY
-      };
-      return returnData;
-    } catch (error) {
-      throw error;
     }
   }
 }
