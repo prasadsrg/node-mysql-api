@@ -38,10 +38,6 @@ export class ConsumerService {
     }
   }
 
-<<<<<<< HEAD
- 
-=======
->>>>>>> 18474f614b3c6bad57937813c2491aecfcbc711f
   async validate(item: Consumer) {
     // if (!item.id || item.id == "" || item.id == "0") {
     //   let uid = App.UniqueNumber();
