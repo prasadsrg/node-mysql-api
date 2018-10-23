@@ -25,14 +25,6 @@ export class Consumer {
   @Column({ name: "vid" })
   vid: string;
 
-  @JoinColumn({ name: "address_id" })
-  @ManyToOne(type => Address)
-  address: Address;
-
-  @JoinColumn({ name: "img_id" })
-  @ManyToOne(type => Img)
-  img: Img;
-
   @Column({ name: "created_on" })
   createdOn: Date;
 
@@ -41,4 +33,13 @@ export class Consumer {
 
   @Column({ name: "updated_by" })
   updatedBy: string;
+
+  @JoinColumn({ name: "address_id" })
+  @ManyToOne(type => Address)
+  address: Address;
+
+  @JoinColumn({ name: "img_id" })
+  @ManyToOne(type => Img)
+  img: Img;
+
 }

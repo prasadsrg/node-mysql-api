@@ -38,16 +38,7 @@ export class ConsumerService {
     }
   }
 
-  async filter(reqData: any) {
-    try {
-      reqData.vid = this.sessionInfo.vid;
-      let data: any = await this.consumerDao.search(reqData);
-      return data;
-    } catch (error) {
-      throw error;
-    }
-  }
-
+ 
   async validate(item: Consumer) {
     // if (!item.id || item.id == "" || item.id == "0") {
     //   let uid = App.UniqueNumber();
