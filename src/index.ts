@@ -19,7 +19,7 @@ let run = async () => {
   }
 };
 run();
-
+console.log(" ************************************** ");
 process.on("uncaughtException", function(err) {
   console.error("Caught exception: " + err);
 });
