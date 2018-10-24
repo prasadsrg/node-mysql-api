@@ -5,6 +5,8 @@ import { ImgDAO } from "../repos/ImgDAO";
 import { Branch } from "../../entities/Branch";
 import { Props } from "../../utils/Props";
 import { hashSync, compareSync } from "bcryptjs";
+import { Address } from "../../entities/Address";
+import { Img } from "../../entities/Img";
 
 export class BranchService {
   public sessionInfo: any;
@@ -47,21 +49,27 @@ export class BranchService {
     console.log(item);
     // let data = await this.branchDao.search({ email: item.email });
     // let mdata = await this.branchDao.search({ mobile: item.mobile });
-    let sdata: any = await this.branchDao.search({ isMain:item.isMain});
-    if( item.id && item.isMain && item.id != sdata.id ){
+    let sdata: any = await this.branchDao.search({ isMain: item.isMain });
+    if (item.id && item.isMain && item.id != sdata.id) {
       return "isMain"
-    } 
+    }
     else {
       if (!item.id) {
-        if(item.isMain && sdata.length > 0){
+        if (item.isMain && sdata.length > 0) {
           return "isMain"
         } else {
           let uid = App.UniqueNumber();
           item.id = uid;
+          if (!item.address) {
+            item.address = new Address();
+          }
           item.address.id = uid;
+          if (!item.img) {
+            item.img = new Img();
+          }
           item.img.id = uid;
           item.vid = this.sessionInfo.vid;
-   
+
         }
       }
       return true;
@@ -69,7 +77,7 @@ export class BranchService {
   }
 
   async save(item: Branch) {
-     try {
+    try {
       let cond = await this.validate(item);
       if (cond == true) {
         let addressData: any = await this.addressDao.save(item.address);
@@ -80,7 +88,7 @@ export class BranchService {
           message: Props.SAVED_SUCCESSFULLY
         };
         return returnData;
-      }  if(cond == "isMain"){
+      } if (cond == "isMain") {
         let returnData = {
           message: Props.IS_MAIN_EXISTS
         };
