@@ -38,10 +38,6 @@ export class ConsumerService {
     }
   }
 
-<<<<<<< HEAD
- 
-=======
->>>>>>> 18474f614b3c6bad57937813c2491aecfcbc711f
   async validate(item: Consumer) {
     // if (!item.id || item.id == "" || item.id == "0") {
     //   let uid = App.UniqueNumber();
@@ -81,7 +77,7 @@ export class ConsumerService {
         let addressData: any = await this.addressDao.save(item.address);
         let imgData: any = await this.imgDao.save(item.img);
         // item.password = hashSync(item.password, 8);
-        let profileData: any = await this.consumerDao.save(item);
+        let consumerData: any = await this.consumerDao.save(item);
         let returnData = {
           id: item.id,
           message: Props.SAVED_SUCCESSFULLY
