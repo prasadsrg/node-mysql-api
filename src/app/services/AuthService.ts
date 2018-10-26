@@ -8,6 +8,7 @@ import { hashSync, compareSync } from "bcryptjs";
 
 import { App } from "../..//utils/App";
 import { Props } from "../../utils/Props";
+import * as Config from "../../utils/Config";
 
 export class AuthService {
   public sessionInfo: any;
@@ -269,8 +270,8 @@ export class AuthService {
       uname.token = tok;
       let data: any = await this.profileDAO.save(uname);
       const mailOptions = {
-        from: '"DFF Tech" <dfftech@gmail.com>', // sender address
-        to: uname.email, // list of receivers
+        from: Config.mailOptions.user, // sender address
+        to: uname.email, // list of recivers
         subject: "Password Reset Link", // Subject line
         //text: 'http://localhost:4200/auth/resetpassword/?t='+tok, // plain text body
         html: App.HtmlRender("OtpSend", { data: { name: uname.name, token: uname.token } }) // html body
