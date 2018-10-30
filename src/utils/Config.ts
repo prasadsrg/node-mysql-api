@@ -23,10 +23,10 @@ export let dbOptions: any = {
 };
 
 export let mailOptions: any = {
-  host: "smtp.gmail.com",
+  host: "smtp.zoho.com",
   port: 465,
-  user: "dfftech@gmail.com",
-  pass: "Test!234"
+  user: "noreply@dfftech.com",
+  pass: "Tech#224"
 };
 
 export let setEnvConfig = () => {
