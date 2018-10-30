@@ -6,6 +6,8 @@ import { ImgDAO } from "../repos/ImgDAO";
 import { Props } from "../../utils/Props";
 import { Repository, QueryBuilder } from "typeorm";
 import { hashSync, compareSync } from "bcryptjs";
+import { Img } from "../../entities/Img";
+import { Address } from "../../entities/Address";
 
 export class ProfileService {
   public sessionInfo: any;
@@ -141,6 +143,21 @@ export class ProfileService {
       } else if (mdata.length > 0) {
         return "Mobile";
       } else {
+        // console.log("else");
+        // if (!item.id) {
+        //   let uid = App.UniqueNumber();
+        //   console.log(item.id);
+        //   item.id = uid;
+        //   if (!item.address) {
+        //     item.address = new Address();
+        //   }
+        //   item.address.id = uid;
+        //   if (!item.img) {
+        //     item.img = new Img();
+        //   }
+        //   item.img.id = uid;
+        //   item.vid = this.sessionInfo.vid;
+        // }
         let uid = App.UniqueNumber();
         item.id = uid;
         item.address.id = uid;
